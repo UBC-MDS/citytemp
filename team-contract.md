@@ -12,10 +12,9 @@
 All group members will contribute their best efforts to ensure the project's success. We will endeavour to distribute the work evenly while taking into consideration each member's preferences and skillset. All members collectively hold the responsibility to ensure our deliverables are correct and complete, even if they did not personally work on them.
 
 ## Weekly Schedule & Deadlines
-**Monday 2 PM - 6 PM** - Group meets to discuss the next milestone and divide the deliverables during the designated lab times. We may stay late to work out something complex together.
-**Friday 6 PM** - Deadline for weekly deliverables.
-**Saturday 12 - 6 PM** - Team members will check in remotely to merge our code, resolve any issues, and check over the final submission.
-
+- **Monday 2 PM - 6 PM** Group meets to discuss the next milestone and divide the deliverables during the designated lab times. We may stay late to work out something complex together.
+- **Friday 6 PM** Deadline for weekly deliverables.
+- **Saturday 12 - 6 PM** Team members will check in remotely to merge our code, resolve any issues, and check over the final submission.
 - Members should expect to spend upwards of an hour each Saturday afternoon finalizing our submission.
 
 ## Submission Details
