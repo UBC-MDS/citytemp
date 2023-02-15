@@ -1,24 +1,24 @@
 # citytemp Dashboard
 
-**Background and data resources TBD**
+**Background and data resources TBC**
 
 
 ## Usage
 
-**TBD**
+**TBC**
 
 
 ## Description
 
-**TBD**
+**TBC**
  
 
 ## Dashboard Sketch
 
-**TBD**
+**TBC**
 
 
-## Contributions
+## Contributors
 
 * Eyre Hong  
 * Renne Kwon
