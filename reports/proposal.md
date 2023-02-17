@@ -2,7 +2,11 @@
 
 ## Motivation and Purpose
 
-**TBC**
+Our role: Data scientist consultancy firm
+
+Target audience: Weather-savvy travel enthusiasts who would like to have a fun-filled experience by planning well in advance for optimal weather conditions.
+
+
 
 
 ## Description of the data
