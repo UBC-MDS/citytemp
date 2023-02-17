@@ -6,8 +6,7 @@ Our role: Data scientist consultancy firm
 
 Target audience: Weather-savvy travel enthusiasts who would like to have a fun-filled experience by planning well in advance for optimal weather conditions.
 
-
-
+Travel enthusiasts who dream about having unforgettable experiences are always worried about getting caught in unexpected weather conditions like heat waves or heavy downpours. It can be a daunting experience, especially for those who are planning international trips if they are not well prepared in terms of clothing, and travel gears to accommodate the unpredictable weather. Since unexpected weather could make or break a trip, our proposed dashboard would be a reliable tool that can help millions of people all over the world who love traveling to embark on memorable adventures to the US, by providing them with weather information. The proposed dashboard is a one-stop shop for finding relevant information like temperature and precipitation levels across different areas in the United States which can also be filtered based on city, state, and month. The dashboard will also showcase insightful heat map visualization for different states in the US which can let the user know which state/city has higher temperatures and which ones have low temperatures on average. All in all, we aim to enable travelers to take informed decisions on which areas to visit and plan activities accordingly for their trip and make the most of their trip to the US without having weather-related surprises.
 
 ## Description of the data
 
