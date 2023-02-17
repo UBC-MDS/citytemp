@@ -2,7 +2,6 @@
 # date: 2023-02-16
 
 """This script downloads the data from the web(given URL) and writes it to the local file system.
-   This has been developed based on the script available at - https://github.com/ttimbers/breast_cancer_predictor/blob/master/src/download_data.py
 
 Usage: download_csv.py --input_url=<input_url> --output_file=<output_file>
 
