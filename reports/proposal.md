@@ -38,4 +38,4 @@ invaluable tool for any traveler who wants to make the most out of their adventu
 
 ## App sketch
 
-Please see the sketch of the dashboard [here](img//Sketch.png).
+Please see the sketch of the dashboard [here](../img/Sketch.png).
