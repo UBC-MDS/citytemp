@@ -34,7 +34,7 @@ These options will allow users to identify trends in temperature/precipitation o
 ## Contributors
 
 * Eyre Hong  
-* Renne Kwon
+* Renee Kwon
 * Sneha Sunil
 * Vincent Ho 
 
