@@ -10,7 +10,8 @@ Travel enthusiasts who dream about having unforgettable experiences are usually 
 
 ## Section 2: Description of the data
 
-In this project, we are using the daily weather data collected by the USA National Weather Service and shared by the [TidyTuesday](https://github.com/rfordatascience/tidytuesday) project by the R4DS Online Learning community.
+In this project, we are using the daily weather data collected by the USA National Weather Service and shared by the [TidyTuesday](https://github.com/rfordatascience/tidytuesday) project by the R4DS Online Learning community. This dataset contains 651,968 observations of 12, 24, and 36 hour weather forecasts of high and low temperatures, precipitation levels, along with observed temperatures and precipitation levels for 160 cities across 53 US states and territories. The data was recorded for 16 months starting on January 30, 2021 to June 1, 2022.
+
 
 ## Section 3: Research questions and usage scenarios
 
