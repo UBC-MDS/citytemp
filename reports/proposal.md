@@ -10,8 +10,7 @@ Travel enthusiasts who dream about having unforgettable experiences are usually 
 
 ## Section 2: Description of the data
 
-**TBC**
- 
+In this project, we are using the daily weather data collected by the USA National Weather Service and shared by the [TidyTuesday](https://github.com/rfordatascience/tidytuesday) project by the R4DS Online Learning community.
 
 ## Section 3: Research questions and usage scenarios
 
