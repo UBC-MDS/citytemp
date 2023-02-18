@@ -12,6 +12,16 @@ Travel enthusiasts who dream about having unforgettable experiences are usually 
 
 In this project, we are using the daily weather data collected by the USA National Weather Service and shared by the [TidyTuesday](https://github.com/rfordatascience/tidytuesday) project by the R4DS Online Learning community. This dataset contains 651,968 observations of 12, 24, and 36 hour weather forecasts of high and low temperatures, precipitation levels, along with observed temperatures and precipitation levels for 160 cities across 53 US states and territories. The data was recorded for 16 months starting on January 30, 2021 to June 1, 2022.
 
+The aim of our dashboard is to report actual temperatures and precipitation levels and not forecasted weather, thus we have only utilized the following columns:
+
+`date` date described by the observation \
+`city` city \
+`state` state \
+`high_or_low` whether the observation was recorded as a high or low temperature of the day \
+`observed_temp` the observed high or low temperature of the day  \
+`observed_precip` the observed precipitation of the day (in inches) 
+
+Further, our project will report a high and low observation of each day and the rows of 12, 24, 36, and 48 hour forecasts were removed. Our processed data contains 162,992 observations. 
 
 ## Section 3: Research questions and usage scenarios
 
