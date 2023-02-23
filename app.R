@@ -1,6 +1,12 @@
 library(shiny)
 library(ggplot2)
 library(dplyr)
+library(plotly)
+library(leaflet)
+library(leaflet.extras)
+library(sf)
+library(countrycode)
+library(RColorBrewer)
 
 # Load dataset
 weather <- read.csv("data/processed/weather_pro.csv")
@@ -26,7 +32,7 @@ ui <- fluidPage(
       
       # Add dropdown menu input for selecting city
       selectInput("city", "Select City:",
-                  choices = unique(weather$city)),
+                  choices = NULL),
       
       # Add radio button input for selecting temperature or precipitation
       radioButtons("data_type", "Select Data Type:",
@@ -42,7 +48,13 @@ ui <- fluidPage(
 )
 
 # Define server
-server <- function(input, output) {
+server <- function(input, output, session) {
+  
+  observe({
+    updateSelectInput(session, "city", 
+                      choices = unique(weather$city[weather$state == input$state]))
+  })
+  
   # Filter data based on user inputs
   filtered_data <- reactive({
     weather %>%
