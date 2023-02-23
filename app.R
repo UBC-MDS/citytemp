@@ -69,13 +69,15 @@ server <- function(input, output, session) {
   output$line_plot <- renderPlot({
     if (input$data_type == "Temperature"){
       ggplot(filtered_data(), aes(x = month, y = observed_temp)) +
-        geom_line() +
+        geom_point(color="violetred") +
+        geom_line(color="lightblue") +
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
         labs(x = "Month", y = "Temperature")
     }
     else{
       ggplot(filtered_data(), aes(x = month, y = observed_precip)) +
-        geom_line() +
+        geom_point(color="violetred") +
+        geom_line(color="lightblue") +
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
         labs(x = "Month", y = "Precipitation")
     }
