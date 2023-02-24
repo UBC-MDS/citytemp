@@ -3,13 +3,14 @@ library(ggplot2)
 library(dplyr)
 library(plotly)
 library(leaflet)
+library(geosphere)
 library(leaflet.extras)
 library(sf)
-library(countrycode)
-library(RColorBrewer)
+
 
 # Load dataset
 weather <- read.csv("data/processed/weather_pro.csv")
+cities <- read.csv("data/processed/cities.csv")
 
 # Define UI
 ui <- fluidPage(
@@ -37,12 +38,13 @@ ui <- fluidPage(
       # Add radio button input for selecting temperature or precipitation
       radioButtons("data_type", "Select Data Type:",
                    choices = c("Temperature", "Precipitation"),
-                   selected = "Temperature")
+                   selected = "Temperature"),
     ),
     
     # Add main panel with plot output
     mainPanel(
-      plotOutput("line_plot")
+      plotOutput("line_plot"),
+      leafletOutput("map")
     )
   )
 )
@@ -50,9 +52,16 @@ ui <- fluidPage(
 # Define server
 server <- function(input, output, session) {
   
+  
+  # Update city input possible values based on selected state
   observe({
     updateSelectInput(session, "city", 
                       choices = unique(weather$city[weather$state == input$state]))
+  })
+  
+  # Update city input when click on map
+  observeEvent(input$map_marker_click, {
+    updateSelectInput(session, "city", selected = input$map_marker_click$id)
   })
   
   # Filter data based on user inputs
@@ -81,6 +90,24 @@ server <- function(input, output, session) {
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
         labs(x = "Month", y = "Precipitation")
     }
+  })
+  
+  # Create leaflet map
+  output$map <- renderLeaflet({
+    leaflet(cities) |>
+      addTiles() |>
+      addCircleMarkers(~lon,
+                       ~lat,
+                       popup = paste0("City: ", cities$city, "<br>",
+                                     "State: ", cities$state, "<br>",
+                                     "Elevation: ", cities$elevation, " m<br>",
+                                     "Distance to Coast: ", cities$distance_to_coast, " mi<br>",
+                                     "Average Annual Precipitation: ", cities$avg_annual_precip, " in"),
+                       color = "navy",
+                       radius = 5,
+                       stroke = FALSE,
+                       fillOpacity = 0.4) |> 
+      setView(-100, 40, zoom = 3.3)
   })
   
 }
