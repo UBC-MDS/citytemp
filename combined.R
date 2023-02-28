@@ -227,7 +227,7 @@ server <- function(input, output, session) {
         y = "City",
         title = paste0(
           "Cities in ",
-          input$state,
+          input$statename,
           " by average precipitation in ",
           input$month,
           " 2021"
