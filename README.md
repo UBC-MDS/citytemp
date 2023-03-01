@@ -13,6 +13,11 @@ To learn more about the app, you can jump to one of the sections below or keep s
 * [Dashboard Sketch and Preview](#dashboard-sketch-and-preview)
 * [Meet our Team](#meet-our-team)
 
+
+## Purpose and Motivation
+
+Being unprepared for certain weather conditions can make or break a trip. Our motivation with citytemp was to create a realiable tool that US travelers can use to make informed decisions on which areas to visit and plan activities accordingly during their travels. Our app uses real historical data to assist travel enthusiasts in understanding weather fluctuations, temperatures, and precipitation levels across various states/cities in the United States and enables them to plan well for their upcoming trips to avoid weather disruptions and unwanted suprises.
+
 ## Overview 
 
 Our dashboard is designed to present a visual analysis of observed temperature and precipitation data from the [weather_forcasts.csv](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-12-20/weather_forecasts.csv) in tidytuesday. Specifically, our dashboard is focused on displaying a visual analysis of the two key variables: observed temperature and observed precipitation that are contained within the dataset. Our app displays the following: 
