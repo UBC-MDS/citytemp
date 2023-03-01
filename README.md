@@ -4,15 +4,22 @@ Welcome! Thank you for visiting the citytemp project repository.
 
 If you're an avid traveller and you want to be prepared for the weather conditions at your next US destination, our app is for you! 
 
-[Link to Deployed App - citytemp](https://tsz-fung-ho.shinyapps.io/citytemp/)
-
 To learn more about the app, you can jump to one of the sections below or keep scrolling.
 
+* [Usage](#usage)
 * [Our Purpose and Motivation](#purpose-and-motivation)
 * [Overview of the Dashboard](#overview)
 * [Dashboard Sketch and Preview](#dashboard-sketch-and-preview)
 * [Meet our Team](#meet-our-team)
 
+## Usage
+
+#### Using `citytemp` online 
+[Deployed App Link - citytemp](https://tsz-fung-ho.shinyapps.io/citytemp/)
+
+#### Running `citytemp` locally
+
+[]
 
 ## Purpose and Motivation
 
