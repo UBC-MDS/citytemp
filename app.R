@@ -173,6 +173,22 @@ server <- function(input, output, session) {
   })
   
   
+  
+  output$avgBox <- renderValueBox({
+    if (input$data_type == "Temperature") {
+      valueBox(
+        paste0(stat_data()$avg_temp, "°F"), "AVG", icon = icon("fa-light fa-sun"),
+        color = "green"
+      )
+    }
+    else{
+      valueBox(
+        paste0(stat_data()$avg_prec), "AVG", icon = icon("list"),
+        color = "green")
+    }
+  })
+  
+  
 }
 
 # Run app
