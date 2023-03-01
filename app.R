@@ -167,7 +167,7 @@ server <- function(input, output, session) {
     }
     else{
       valueBox(
-        paste0(stat_data()$min_prec), "MIN", icon = icon("list"),
+        paste0(stat_data()$min_prec), "MIN", icon = icon("fa-regular fa-cloud-sun-rain"),
         color = "blue")
     }
   })
@@ -183,7 +183,7 @@ server <- function(input, output, session) {
     }
     else{
       valueBox(
-        paste0(stat_data()$avg_prec), "AVG", icon = icon("list"),
+        paste0(stat_data()$avg_prec), "AVG", icon = icon("fa-regular fa-cloud-sun-rain"),
         color = "green")
     }
   })
