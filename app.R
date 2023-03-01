@@ -36,10 +36,8 @@ ui <- dashboardPage(
     radioButtons("data_type", "Select Data Type:",
                  choices = c("Temperature", "Precipitation"),
                  selected = "Temperature")),
-    # Add sidebar panel with inputs
   dashboardBody(
-      
-      # Add main panel with plot output
+      # Added a row for summary statistics
     fluidRow(
       
       valueBoxOutput("avgBox"),
@@ -51,9 +49,6 @@ ui <- dashboardPage(
     box(plotOutput("line_plot")),
     box(leafletOutput("map"))
     )
-    
-    
-  
 )
 
 
