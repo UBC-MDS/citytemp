@@ -142,6 +142,7 @@ server <- function(input, output, session) {
       )
   })
   
+  # create max summary statistic box
   output$maxBox <- renderValueBox({
     if (input$data_type == "Temperature") {
       valueBox(
@@ -156,8 +157,7 @@ server <- function(input, output, session) {
     }
   })
   
-  
-  
+  # create min summary statistic box
   output$minBox <- renderValueBox({
     if (input$data_type == "Temperature") {
       valueBox(
@@ -172,8 +172,7 @@ server <- function(input, output, session) {
     }
   })
   
-  
-  
+  # create avg summary statistic box
   output$avgBox <- renderValueBox({
     if (input$data_type == "Temperature") {
       valueBox(
@@ -187,7 +186,6 @@ server <- function(input, output, session) {
         color = "green")
     }
   })
-  
   
 }
 
