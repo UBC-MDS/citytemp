@@ -33,7 +33,7 @@ ui <- dashboardPage(
                 choices = NULL),
     
     # Add radio button input for selecting temperature or precipitation
-    radioButtons("data_type", "Select Data Type:",
+    radioButtons("data_type", "Select Type:",
                  choices = c("Temperature", "Precipitation"),
                  selected = "Temperature")),
   dashboardBody(
