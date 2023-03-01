@@ -6,6 +6,7 @@ library(leaflet)
 library(geosphere)
 library(leaflet.extras)
 library(sf)
+library(shinydashboard)
 
 
 # Load dataset
@@ -13,41 +14,43 @@ weather <- read.csv("data/processed/weather_pro.csv")
 cities <- read.csv("data/processed/cities.csv")
 
 # Define UI
-ui <- fluidPage(
+ui <- dashboardPage(
   # Add title
-  titlePanel("Temperature or Precipitation Trends"),
+  dashboardHeader(title = "City Weather"),
   
   # Add sidebar layout
-  sidebarLayout(
-    # Add sidebar panel with inputs
-    sidebarPanel(
-      
-      # Add slider input for selecting range of months
-      sliderInput("month_range", "Select Month Range:",
-                  min = 1, max = 12, value = c(1, 12)),
-      
-      
-      # Add dropdown menu input for selecting state
-      selectInput("state", "Select State:",
-                  choices = unique(weather$state)),
-      
-      # Add dropdown menu input for selecting city
-      selectInput("city", "Select City:",
-                  choices = NULL),
-      
-      # Add radio button input for selecting temperature or precipitation
-      radioButtons("data_type", "Select Data Type:",
-                   choices = c("Temperature", "Precipitation"),
-                   selected = "Temperature"),
-    ),
+  dashboardSidebar(# Add slider input for selecting range of months
+    sliderInput("month_range", "Select Month Range:",
+                min = 1, max = 12, value = c(1, 12)),
     
-    # Add main panel with plot output
-    mainPanel(
-      plotOutput("line_plot"),
-      leafletOutput("map")
+    
+    # Add dropdown menu input for selecting state
+    selectInput("state", "Select State:",
+                choices = unique(weather$state)),
+    
+    # Add dropdown menu input for selecting city
+    selectInput("city", "Select City:",
+                choices = NULL),
+    
+    # Add radio button input for selecting temperature or precipitation
+    radioButtons("data_type", "Select Type:",
+                 choices = c("Temperature", "Precipitation"),
+                 selected = "Temperature")),
+  dashboardBody(
+      # Added a row for summary statistics
+    fluidRow(
+      
+      valueBoxOutput("avgBox"),
+      
+      valueBoxOutput("maxBox"),
+      
+      valueBoxOutput("minBox")
+    ),
+    box(plotOutput("line_plot")),
+    box(leafletOutput("map"))
     )
-  )
 )
+
 
 # Define server
 server <- function(input, output, session) {
@@ -117,6 +120,66 @@ server <- function(input, output, session) {
                        stroke = FALSE,
                        fillOpacity = 0.4) |> 
       setView(-100, 40, zoom = 3.3)
+  })
+  
+  # data processing for summary statistics
+  stat_data <- reactive({
+    weather %>% filter(city == input$city ) %>%
+      filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
+      group_by(city) %>% 
+      summarize(
+        avg_temp = round(mean(observed_temp, na.rm =TRUE), 2),
+        min_temp = min(observed_temp, na.rm =TRUE),
+        max_temp = max(observed_temp, na.rm =TRUE),
+        avg_prec = round(mean(observed_precip, na.rm =TRUE), 2),
+        min_prec= min(observed_precip, na.rm =TRUE),
+        max_prec = max(observed_precip, na.rm =TRUE)
+      )
+  })
+  
+  # create max summary statistic box
+  output$maxBox <- renderValueBox({
+    if (input$data_type == "Temperature") {
+      valueBox(
+        paste0(stat_data()$max_temp, "°F"), "MAX", icon = icon("fa-light fa-sun"),
+        color = "red"
+      )
+    }
+    else{
+      valueBox(
+        paste0(stat_data()$max_prec), "MAX", icon = icon("fa-regular fa-cloud-sun-rain"),
+        color = "red")
+    }
+  })
+  
+  # create min summary statistic box
+  output$minBox <- renderValueBox({
+    if (input$data_type == "Temperature") {
+      valueBox(
+        paste0(stat_data()$min_temp, "°F"), "MIN", icon = icon("fa-light fa-sun"),
+        color = "blue"
+      )
+    }
+    else{
+      valueBox(
+        paste0(stat_data()$min_prec), "MIN", icon = icon("fa-regular fa-cloud-sun-rain"),
+        color = "blue")
+    }
+  })
+  
+  # create avg summary statistic box
+  output$avgBox <- renderValueBox({
+    if (input$data_type == "Temperature") {
+      valueBox(
+        paste0(stat_data()$avg_temp, "°F"), "AVG", icon = icon("fa-light fa-sun"),
+        color = "green"
+      )
+    }
+    else{
+      valueBox(
+        paste0(stat_data()$avg_prec), "AVG", icon = icon("fa-regular fa-cloud-sun-rain"),
+        color = "green")
+    }
   })
   
 }
