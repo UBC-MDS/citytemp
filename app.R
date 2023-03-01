@@ -155,6 +155,24 @@ server <- function(input, output, session) {
         color = "red")
     }
   })
+  
+  
+  
+  output$minBox <- renderValueBox({
+    if (input$data_type == "Temperature") {
+      valueBox(
+        paste0(stat_data()$min_temp, "°F"), "MIN", icon = icon("fa-light fa-sun"),
+        color = "blue"
+      )
+    }
+    else{
+      valueBox(
+        paste0(stat_data()$min_prec), "MIN", icon = icon("list"),
+        color = "blue")
+    }
+  })
+  
+  
 }
 
 # Run app
