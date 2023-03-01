@@ -141,6 +141,20 @@ server <- function(input, output, session) {
         max_prec = max(observed_precip, na.rm =TRUE)
       )
   })
+  
+  output$maxBox <- renderValueBox({
+    if (input$data_type == "Temperature") {
+      valueBox(
+        paste0(stat_data()$max_temp, "°F"), "MAX", icon = icon("fa-light fa-sun"),
+        color = "red"
+      )
+    }
+    else{
+      valueBox(
+        paste0(stat_data()$max_prec), "MAX", icon = icon("fa-regular fa-cloud-sun-rain"),
+        color = "red")
+    }
+  })
 }
 
 # Run app
