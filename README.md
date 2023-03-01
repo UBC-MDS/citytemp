@@ -1,10 +1,21 @@
-# citytemp 
-## Overview
+# citytemp
 
-Citytemp dashboard is designed to assist travel enthusiasts in understanding weather fluctuations, temperatures, and precipitation levels across various states/cities in the United States based on historical data to enable them to plan well for their upcoming trips to avoid weather disruptions.
-## Description
+Welcome! Thank you for visiting the citytemp project repository.
 
-Our proposed dashboard is designed to present a visual analysis of observed temperature and precipitation data from the [weather_forcasts.csv](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-12-20/weather_forecasts.csv) in tidytuesday. Specifically, our dashboard is focused on displaying a visual analysis of the two key variables: observed temperature and observed precipitation that are contained within the dataset. The visualizations that we will include are:
+If you're an avid traveller and you want to be prepared for the weather conditions at your next US destination, our app is for you! 
+
+[Link to Deployed App - citytemp](https://tsz-fung-ho.shinyapps.io/citytemp/)
+
+To learn more about the app, you can jump to one of the sections below or keep scrolling.
+
+* [Our Purpose and Motivation](#purpose-and-motivation)
+* [Overview of the Dashboard](#overview)
+* [Dashboard Sketch and Preview](#dashboard-sketch-and-preview)
+* [Meet our Team](#meet-our-team)
+
+## Overview 
+
+Our dashboard is designed to present a visual analysis of observed temperature and precipitation data from the [weather_forcasts.csv](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-12-20/weather_forecasts.csv) in tidytuesday. Specifically, our dashboard is focused on displaying a visual analysis of the two key variables: observed temperature and observed precipitation that are contained within the dataset. Our app displays the following: 
 
 1. A map that shows the temperature or precipitation by state. The states will be coloured as a diverging colour palette to identify countries with low, medium, and high levels.
 2. A bar chart that shows the top 10 states/cities with the highest temperature/precipitation.
@@ -20,11 +31,11 @@ In addition, our dashboard will offer various filtering options to customize the
 
 These options will allow users to identify trends in temperature/precipitation over time in the desired state or city, making it easier to observe how temperature/precipitation and related visualizations have changed across different regions in the United States.
 
-## Dashboard Sketch
+## Dashboard Sketch and Preview
 
 ![](img/Sketch.png)
 
-## Contributors
+## Meet Our Team
 
 * Eyre Hong  
 * Renee Kwon
