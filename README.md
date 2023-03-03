@@ -54,7 +54,7 @@ install.packages(c('dplyr', 'plotly', 'ggplot2', 'leaflet', 'geosphere', 'leafle
 3. Finally, run the following command to run the app locally!
 
 ```{r}
-RScript src/app.R
+RScript app.R
 ```
 
 ## Meet The Team
