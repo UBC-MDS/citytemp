@@ -17,7 +17,7 @@ weather_bar$month <- month.name[weather_bar$month]
 
 # Define UI
 ui <- dashboardPage(
-  dashboardHeader(title = "Citytemp Weather Dashboard"),
+  dashboardHeader(title = "Weather Dashboard"),
   
   dashboardSidebar(sidebarMenu(
     menuItem(
