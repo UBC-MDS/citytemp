@@ -10,6 +10,16 @@ library(shinydashboard)
 
 weather <- read.csv("data/processed/weather_pro.csv")
 cities <- read.csv("data/processed/cities.csv")
+weather_18 <- weather %>% 
+  mutate(month = case_when(grepl("2022-01", date) ~ "13",
+                           grepl("2022-02", date) ~ "14",
+                           grepl("2022-03", date) ~ "15",
+                           grepl("2022-04", date) ~ "16",
+                           grepl("2022-05", date) ~ "17",
+                           grepl("2022-06", date) ~ "18",
+                           TRUE ~ as.character(month))) %>%
+  mutate(month = as.numeric(month))
+weather_18$DayMonth <- format(as.Date(weather$date), "%b-%y")
 
 # Change numeric month from number to name only for bar plots
 weather_bar <- weather
@@ -42,13 +52,13 @@ ui <- dashboardPage(
                   "month_range",
                   "Select Month Range:",
                   min = 1,
-                  max = 12,
-                  value = c(1, 12)
+                  max = 16,
+                  value = c(1, 16)
                 ),
                 # Add dropdown menu input for selecting state
                 selectInput("state",
                             "Select State:",
-                            choices = unique(weather$state)),
+                            choices = unique(weather_18$state)),
                 # Add dropdown menu input for selecting city
                 selectInput("city",
                             "Select City:",
@@ -116,12 +126,12 @@ server <- function(input, output, session) {
   observe({
     updateSelectInput(session,
                       "city",
-                      choices = unique(weather$city[weather$state == input$state]))
+                      choices = unique(weather_18$city[weather_18$state == input$state]))
   })
   
   # Filter data based on user inputs
   line_data <- reactive({
-    weather %>% filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
+    weather_18 %>% filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
       filter(state == input$state, city == input$city) %>%
       group_by(month, high_or_low) %>%
       summarise(
@@ -137,14 +147,14 @@ server <- function(input, output, session) {
              aes(x = month, y = observed_temp, col = high_or_low)) +
         geom_point() +
         geom_line() +
-        scale_x_continuous(breaks = seq(1, 12, by = 1)) +
+        scale_x_continuous(breaks = seq(1, 16, by = 1)) +
         labs(x = "Month", y = "Temperature (°F)", color = "High/Low")
     }
     else{
       ggplot(line_data(), aes(x = month, y = observed_precip)) +
         geom_point(color = "violetred") +
         geom_line(color = "lightblue") +
-        scale_x_continuous(breaks = seq(1, 12, by = 1)) +
+        scale_x_continuous(breaks = seq(1, 16, by = 1)) +
         labs(x = "Month", y = "Precipitation")
     }
   })
@@ -152,7 +162,7 @@ server <- function(input, output, session) {
   # --------------------------------------Map plot start here------------------------------------
   
   map_data <- reactive({
-    weather %>% filter(city == input$city ) %>%
+    weather_18 %>% filter(city == input$city) %>%
       filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
       group_by(city) %>% 
       summarize(
@@ -162,7 +172,7 @@ server <- function(input, output, session) {
   })
   
   map_data_color <- reactive({
-    weather %>% 
+    weather_18 %>% 
       filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
       group_by(city) %>% 
       summarize(
@@ -282,7 +292,7 @@ server <- function(input, output, session) {
   
   # data processing for summary statistics
   stat_data <- reactive({
-    weather %>% filter(city == input$city ) %>%
+    weather_18 %>% filter(city == input$city ) %>%
       filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
       group_by(city) %>% 
       summarize(
