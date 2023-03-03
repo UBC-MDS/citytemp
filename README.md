@@ -4,7 +4,8 @@ Welcome! Thank you for visiting the citytemp project repository.
 
 If you're an avid traveller and you want to be prepared for the weather conditions at your next US destination, our app is for you! 
 
-[Link to the citytemp app](https://tsz-fung-ho.shinyapps.io/citytemp/)
+[--- link to be updated --]
+[Link to the citytemp app](https://reneekwon.shinyapps.io/citytemp/)
 
 To learn more about the app, you can jump to one of the sections below or keep scrolling.
 
@@ -16,29 +17,23 @@ To learn more about the app, you can jump to one of the sections below or keep s
 
 ## Purpose and Motivation
 
-Being unprepared for certain weather conditions can make or break a trip. Our motivation with citytemp was to create a realiable tool that US travelers can use to make informed decisions on which US areas to visit and plan activities accordingly during their travels. Our app uses real historical data to assist travel enthusiasts in understanding weather fluctuations, temperatures, and precipitation levels across various states/cities in the United States and enables them to plan well for their upcoming trips to avoid weather disruptions and unwanted suprises.
+Being unprepared for certain weather conditions can make or break a trip. Our motivation with citytemp was to create a realiable tool that US travelers can use to make informed decisions on which areas to visit and plan activities accordingly during their travels. Our app uses real historical data to assist travel enthusiasts in understanding weather fluctuations, temperatures, and precipitation levels across various states/cities in the United States and enables them to plan well for their upcoming trips to avoid weather disruptions and unwanted suprises.
 
-## Overview 
+## Dashboard Preview and Description
 
-Our dashboard is designed to present a visual analysis of observed temperature and precipitation data from the [weather_forcasts.csv](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-12-20/weather_forecasts.csv) in tidytuesday. Specifically, our dashboard is focused on displaying a visual analysis of the two key variables: observed temperature and observed precipitation that are contained within the dataset. Our app displays the following: 
+[--- GIF will go here --]
 
-1. A map that shows the temperature or precipitation by state. The states will be coloured as a diverging colour palette to identify countries with low, medium, and high levels.
-2. A bar chart that shows the top 10 states/cities with the highest temperature/precipitation.
-3. A line plot that shows the distribution of temperature/precipitation of a certain states/cities.
-4. Boxes showing summary statistics such as highest, lowest and average temperatures of various states/cities.
+Our dashboard is presents observed temperature and precipitation data from the [weather_forcasts.csv](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-12-20/weather_forecasts.csv) in tidytuesday. 
 
-In addition, our dashboard will offer various filtering options to customize the displayed visualizations and enable the user to manipulate the data as desired.
+Users can select the duration of months, state, and city of interest and our app will present the following: 
 
-1. A checkbox that allows users to choose to view either temperature or precipitation data.
-2. A slider that allows users to select a single month to visualize.
-3. A filter that allows users to select a state to visualize.
-4. A filter that allows users to select a city to visualize, if desired.
+1. Summary metrics including average, mininimum, and maximum temperature/precipitation. 
+2. A map showing average temperature or precipitation levels based on the range chosen by the user. 
+City points are coloured from low to high temperature or precipitation levels. 
+3. A line plot showing the distribution of low and high observed temperatures and precipitation levels. 
+4. Bar charts displaying the top 10 cities in the chosen state with the highest or lowest average temperature/precipitation.
 
-These options will allow users to identify trends in temperature/precipitation over time in the desired state or city, making it easier to observe how temperature/precipitation and related visualizations have changed across different regions in the United States.
-
-## Dashboard Sketch and Preview
-
-![](img/Sketch.png)
+Citytemp's visualizations allow user to easily observe and identify trends in temperature/precipitation over time in their chosen state or city.
 
 ## Usage
 
