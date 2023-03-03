@@ -1,38 +1,76 @@
-# citytemp 
-## Overview
+# citytemp
 
-Citytemp dashboard is designed to assist travel enthusiasts in understanding weather fluctuations, temperatures, and precipitation levels across various states/cities in the United States based on historical data to enable them to plan well for their upcoming trips to avoid weather disruptions.
-## Description
+Welcome! Thank you for visiting the citytemp project repository.
 
-Our proposed dashboard is designed to present a visual analysis of observed temperature and precipitation data from the [weather_forcasts.csv](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-12-20/weather_forecasts.csv) in tidytuesday. Specifically, our dashboard is focused on displaying a visual analysis of the two key variables: observed temperature and observed precipitation that are contained within the dataset. The visualizations that we will include are:
+If you're an avid traveller and you want to be prepared for the weather conditions at your next US destination, our app is for you! 
 
-1. A map that shows the temperature or precipitation by state. The states will be coloured as a diverging colour palette to identify countries with low, medium, and high levels.
-2. A bar chart that shows the top 10 states/cities with the highest temperature/precipitation.
-3. A line plot that shows the distribution of temperature/precipitation of a certain states/cities.
-4. Boxes showing summary statistics such as highest, lowest and average temperatures of various states/cities.
+[--- link to be updated --]
+[Link to the citytemp app](https://reneekwon.shinyapps.io/citytemp/)
 
-In addition, our dashboard will offer various filtering options to customize the displayed visualizations and enable the user to manipulate the data as desired.
+To learn more about the app, you can jump to one of the sections below or keep scrolling.
 
-1. A checkbox that allows users to choose to view either temperature or precipitation data.
-2. A slider that allows users to select a single month to visualize.
-3. A filter that allows users to select a state to visualize.
-4. A filter that allows users to select a city to visualize, if desired.
+* [Purpose and Motivation](#purpose-and-motivation)
+* [Preview and Description](#dashboard-preview-and-description)
+* [Installation](#installation)
+* [Meet the Team](#meet-the-team)
+* [Contributing](#contributing)
+* [Support](#support)
+* [Code of Conduct](#code-of-conduct)
+* [License](#license)
 
-These options will allow users to identify trends in temperature/precipitation over time in the desired state or city, making it easier to observe how temperature/precipitation and related visualizations have changed across different regions in the United States.
+## Purpose and Motivation
 
-## Dashboard Sketch
+Being unprepared for certain weather conditions can make or break a trip. Our motivation with `citytemp` was to create a realiable tool that US travelers can use to make informed decisions on which areas to visit and plan activities accordingly during their travels. Our app uses real historical data to assist travel enthusiasts in understanding weather fluctuations, temperatures, and precipitation levels across various states/cities in the United States and enables them to plan well for their upcoming trips to avoid weather disruptions and unwanted suprises.
 
-![](img/Sketch.png)
+## Dashboard Preview and Description
 
-## Contributors
+[--- GIF will go here --]
 
-* Eyre Hong  
-* Renee Kwon
-* Sneha Sunil
-* Vincent Ho 
+Our dashboard is presents observed temperature and precipitation data from the [weather_forcasts.csv](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-12-20/weather_forecasts.csv) in tidytuesday. 
 
-Feedback and suggestions are always welcome! Please read [the contributing
-guidelines](https://github.com/UBC-MDS/citytemp/blob/main/CONTRIBUTING.md)
+The `citytemp` app contains two tabs: 
+
+In the `Temperature or Precipitation Trends` tab, users specify the range of months of their interest (eg. 1 to 4 for January to June), the city and state of their interest (eg. TX, Austin), and whether they would like to observe temperature levels or percipitation levels.
+
+Based on these user selections, our app presents the following:
+
+  - Summary metrics including average, mininimum, and maximum temperature/precipitation. 
+  - A map showing average temperature or precipitation levels based on the range chosen by the user. City points are coloured from low to high temperature or precipitation levels. 
+  - A line plot showing the distribution of low and high observed temperatures and precipitation levels. 
+
+In the `City Ranking by Temp/Rain` tab, users select the US state of their interest, the month they would like to observe data for, and whether they would like to observe high or low temperature/precipitation records. Based on theses selections, our app presents bar graphs for the top 10 cities in the specified state with the highest or lowest average monthly temperature/precipitation.
+
+## Installation
+
+To install `citytemp` locally, you can:
+
+1. Clone this repository.
+2. Run the following commands your R console to install the required libraries locally:
+
+```{r}
+install.packages(c('dplyr', 'plotly', 'ggplot2', 'leaflet', 'geosphere', 'leaflet.extras', 'sf', 'shinydashboard'))
+```
+
+3. Finally, run the following command to run the app locally!
+
+```{r}
+RScript src/app.R
+```
+
+## Meet The Team
+
+The creators of `citytemp` are students of the MDS Program at the University of British Columbia. This project was created for the DSCI 532 (Data Visualization II) course. 
+
+* [Eyre Hong](https://github.com/eyrexh)
+* [Renee Kwon](https://github.com/renee-kwon)
+* [Sneha Sunil](https://github.com/snesunil)
+* [Vincent Ho](https://github.com/vincentho32)
+
+# Contributing
+
+Feedback and suggestions are always welcome! 
+
+Please read [the contributing guidelines](https://github.com/UBC-MDS/citytemp/blob/main/CONTRIBUTING.md)
 to get started.
 
 ## Support
@@ -47,4 +85,4 @@ In the interest of fostering an open and welcoming environment, we as contributo
 of these points can be found in [`CODE_OF_CONDUCT.md`](https://github.com/UBC-MDS/citytemp/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
-The citytemp Dashboard was created by Eyre Hong, Renee Kwon, Sneha Sunil, Vincent Ho (UBC MDS). It is licensed under the terms of the MIT license.
+The citytemp Dashboard is licensed under the terms of the MIT license.
