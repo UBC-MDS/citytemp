@@ -162,6 +162,16 @@ server <- function(input, output, session) {
       )
   })
   
+  map_data_color <- reactive({
+    weather %>% 
+      filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
+      group_by(city) %>% 
+      summarize(
+        avg_temp = round(mean(observed_temp, na.rm =TRUE), 2),
+        avg_prec = round(mean(observed_precip, na.rm =TRUE), 2),
+      )
+  })
+  
   # Create leaflet map
   output$map <- renderLeaflet({
     leaflet(cities) |>
@@ -170,35 +180,32 @@ server <- function(input, output, session) {
         ~ lon,
         ~ lat,
         popup = paste0(
-          "City: ",
+          "<B>City: </B>",
           cities$city,
           "<br>",
-          "State: ",
+          "<B>State: </B>",
           cities$state,
           "<br>",
-          "Elevation: ",
+          "<B>Elevation: </B>",
           cities$elevation,
           " m<br>",
-          "Distance to Coast: ",
+          "<B>Distance to Coast: </B>",
           cities$distance_to_coast,
-          " mi<br>",
-          "Average Observed Temperature: ",
-          map_data()$avg_temp,
-          " °F<br>",
-          "Average Observed Precipitation: ",
-          map_data()$avg_prec,
-          " in"
+          " mi<br>"
         ),
         layerId = cities$city,
         label = cities$city,
-        color = "navy",
+        color = if_else(map_data_color()$avg_temp <= 40, "#FEF001", 
+                        if_else(map_data_color()$avg_temp <= 50, "#FFCE03",
+                                if_else(map_data_color()$avg_temp <= 60, "#FD9A01", 
+                                        if_else(map_data_color()$avg_temp <= 70, "#FD6104",
+                                                if_else(map_data_color()$avg_temp <= 80, "#FF2C05", "#F00505"))))),
         radius = 5,
         stroke = FALSE,
         fillOpacity = 0.4
       ) |>
       setView(-100, 40, zoom = 3.3)
   })
-  
   
   
   # --------------------------------------City Ranking Tab start here------------------------------------
