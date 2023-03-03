@@ -20,7 +20,7 @@ To learn more about the app, you can jump to one of the sections below or keep s
 
 ## Purpose and Motivation
 
-Being unprepared for certain weather conditions can make or break a trip. Our motivation with `citytemp` was to create a realiable tool that US travelers can use to make informed decisions on which areas to visit and plan activities accordingly during their travels. Our app uses real historical data to assist travel enthusiasts in understanding weather fluctuations, temperatures, and precipitation levels across various states/cities in the United States and enables them to plan well for their upcoming trips to avoid weather disruptions and unwanted suprises.
+Being unprepared for certain weather conditions can make or break a trip. Our motivation with `citytemp` was to create a reliable tool that US travelers can use to make informed decisions on which areas to visit and plan activities accordingly during their travels. Our app uses real historical data to assist travel enthusiasts in understanding weather fluctuations, temperatures, and precipitation levels across various states/cities in the United States and enables them to plan well for their upcoming trips to avoid weather disruptions and unwanted surprises.
 
 ## Dashboard Preview and Description
 
@@ -30,22 +30,22 @@ Our dashboard is presents observed temperature and precipitation data from the [
 
 The `citytemp` app contains two tabs: 
 
-In the `Temperature or Precipitation Trends` tab, users specify the range of months of their interest (eg. 1 to 4 for January to June), the city and state of their interest (eg. TX, Austin), and whether they would like to observe temperature levels or percipitation levels.
+In the `Temperature or Precipitation Trends` tab, users specify the range of months of their interest (eg. 1 to 6 for January to June), the city and state of their interest (eg. TX, Austin), and whether they would like to observe temperature levels or precipitation levels.
 
 Based on these user selections, our app presents the following:
 
-  - Summary metrics including average, mininimum, and maximum temperature/precipitation. 
-  - A map showing average temperature or precipitation levels based on the range chosen by the user. City points are coloured from low to high temperature or precipitation levels. 
+  - Summary metrics including average, minimum, and maximum temperature/precipitation. 
+  - A map showing the average temperature or precipitation levels based on the range chosen by the user. City points are coloured from low to high temperature or precipitation levels. 
   - A line plot showing the distribution of low and high observed temperatures and precipitation levels. 
 
-In the `City Ranking by Temp/Rain` tab, users select the US state of their interest, the month they would like to observe data for, and whether they would like to observe high or low temperature/precipitation records. Based on theses selections, our app presents bar graphs for the top 10 cities in the specified state with the highest or lowest average monthly temperature/precipitation.
+In the `City Ranking by Temp/Rain` tab, users select the US state of their interest, the month they would like to observe data for, and whether they would like to observe high or low temperature/precipitation records. Based on these selections, our app presents bar graphs for the top 10 cities in the specified state with the highest or lowest average monthly temperature/precipitation.
 
 ## Installation
 
 To install `citytemp` locally, you can:
 
 1. Clone this repository.
-2. Run the following commands your R console to install the required libraries locally:
+2. Run the following command in your R console to install the required libraries locally:
 
 ```{r}
 install.packages(c('dplyr', 'plotly', 'ggplot2', 'leaflet', 'geosphere', 'leaflet.extras', 'sf', 'shinydashboard'))
@@ -75,13 +75,13 @@ to get started.
 
 ## Support
 
-If you run into troubles, please [check the issue
+If you run into trouble, please [check the issue
 list](https://github.com/UBC-MDS/citytemp/issues) to see
 if your problem has already been reported or to open new issues.
 
 ## Code of conduct
 
-In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation. Detailed descriptions
+In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to make participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation. Detailed descriptions
 of these points can be found in [`CODE_OF_CONDUCT.md`](https://github.com/UBC-MDS/citytemp/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
