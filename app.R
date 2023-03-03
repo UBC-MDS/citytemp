@@ -198,26 +198,35 @@ server <- function(input, output, session) {
         color = 
           if (input$data_type == "Temperature") {
             if_else(map_data_color()$avg_temp <= 40, "#FEF001", 
-                        if_else(map_data_color()$avg_temp <= 50, "#FFCE03",
                                 if_else(map_data_color()$avg_temp <= 60, "#FD9A01", 
-                                        if_else(map_data_color()$avg_temp <= 70, "#FD6104",
-                                                if_else(map_data_color()$avg_temp <= 80, "#FF2C05", "#F00505")))))
+                                                if_else(map_data_color()$avg_temp <= 80, "#FD6104", "#F00505")))
           }
         else{
           if_else(map_data_color()$avg_prec <= 0.05, "#BCD2E8", 
-                  if_else(map_data_color()$avg_prec <= 0.10, "#91BAD6",
                           if_else(map_data_color()$avg_prec <= 0.15, "#73A5C6", 
-                                  if_else(map_data_color()$avg_prec <= 0.20, "#528AAE",
-                                          if_else(map_data_color()$avg_prec <= 0.25, "#2E5984", "#1E3F66")))))
+                                          if_else(map_data_color()$avg_prec <= 0.25, "#2E5984", "#1E3F66")))
         }
         ,
         radius = 5,
         stroke = FALSE,
         fillOpacity = 0.5
-      ) |>
-      setView(-100, 40, zoom = 3.5)
+      ) %>%
+    addLegend(title =
+                if (input$data_type == "Temperature"){
+                  "Average Temperature (°F)"}
+              else{"Average Precipitation (inches)"}
+              ,
+              colors =
+                if (input$data_type == "Temperature"){
+                  c("#FEF001", "#FD9A01", "#FD6104", "#F00505")}
+              else{c("#BCD2E8", "#73A5C6", "#2E5984", "#1E3F66")},
+              labels = 
+                if (input$data_type == "Temperature"){
+                c("< 40", "40 - 60", "60 - 80", "80 <")}
+              else{c("< 0.05", "0.05 - 0.15", "0.15 - 0.25", "0.25 <")}
+              ) %>%
+      setView(-100, 40, zoom = 3)
   })
-  
   
   # --------------------------------------City Ranking Tab start here------------------------------------
   
