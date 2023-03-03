@@ -138,14 +138,19 @@ server <- function(input, output, session) {
         geom_point() +
         geom_line() +
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
-        labs(x = "Month", y = "Temperature (°F)", color = "High/Low")
+        labs(x = "Month", y = "Temperature (°F)", color = "High/Low") +
+        ggtitle(paste("Temperature Distribution for", input$city, ",", input$state)) +
+        theme(plot.title = element_text(size=20, face="bold", family="Palatino", hjust = 0.5))
+
     }
     else{
       ggplot(line_data(), aes(x = month, y = observed_precip)) +
         geom_point(color = "violetred") +
         geom_line(color = "lightblue") +
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
-        labs(x = "Month", y = "Precipitation")
+        labs(x = "Month", y = "Precipitation") +
+        ggtitle(paste("Precipitation Distribution for", input$city, ",", input$state)) +
+        theme(plot.title = element_text(size=20, face="bold", family="Palatino", hjust = 0.5))
     }
   })
   
