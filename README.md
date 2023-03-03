@@ -25,7 +25,7 @@ Being unprepared for certain weather conditions can make or break a trip. Our mo
 
 Our dashboard is presents observed temperature and precipitation data from the [weather_forcasts.csv](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-12-20/weather_forecasts.csv) in tidytuesday. 
 
-Users can select the duration of months, state, and city of interest and our app will present the following: 
+By using the control panel on the left side, users can select the range of months and city and state of interest and whether they would like to observe visualizations based on temperature or percipitation levels. Based on these user selections, our app will present the following: 
 
 1. Summary metrics including average, mininimum, and maximum temperature/precipitation. 
 2. A map showing average temperature or precipitation levels based on the range chosen by the user. 
@@ -33,16 +33,19 @@ City points are coloured from low to high temperature or precipitation levels.
 3. A line plot showing the distribution of low and high observed temperatures and precipitation levels. 
 4. Bar charts displaying the top 10 cities in the chosen state with the highest or lowest average temperature/precipitation.
 
-Citytemp's visualizations allow user to easily observe and identify trends in temperature/precipitation over time in their chosen state or city.
+## Installation
 
-## Usage
+You can download this file, create a conda environment and activate it as follows.
 
-#### Using `citytemp` online 
-[Deployed App Link - citytemp](https://tsz-fung-ho.shinyapps.io/citytemp/)
+conda env create -f environment.yaml
+conda activate van-crime
+You can view the source code in src/app.py.
 
-#### Running `citytemp` locally
+Run locally
+Make sure you are in the root directory of the repository. Then, run the following command in Terminal:
 
-[]
+python src/app.py
+You will be given an URL to use the dashboard.
 
 
 ## Meet Our Team
