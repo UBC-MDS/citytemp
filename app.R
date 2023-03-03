@@ -150,6 +150,18 @@ server <- function(input, output, session) {
     }
   })
   
+  # --------------------------------------Map plot start here------------------------------------
+  
+  map_data <- reactive({
+    weather %>% filter(city == input$city ) %>%
+      filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
+      group_by(city) %>% 
+      summarize(
+        avg_temp = round(mean(observed_temp, na.rm =TRUE), 2),
+        avg_prec = round(mean(observed_precip, na.rm =TRUE), 2),
+      )
+  })
+  
   # Create leaflet map
   output$map <- renderLeaflet({
     leaflet(cities) |>
@@ -170,8 +182,11 @@ server <- function(input, output, session) {
           "Distance to Coast: ",
           cities$distance_to_coast,
           " mi<br>",
-          "Average Annual Precipitation: ",
-          cities$avg_annual_precip,
+          "Average Observed Temperature: ",
+          map_data()$avg_temp,
+          " °F<br>",
+          "Average Observed Precipitation: ",
+          map_data()$avg_prec,
           " in"
         ),
         layerId = cities$city,
