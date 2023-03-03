@@ -9,15 +9,18 @@ If you're an avid traveller and you want to be prepared for the weather conditio
 
 To learn more about the app, you can jump to one of the sections below or keep scrolling.
 
-* [Usage](#usage)
-* [Our Purpose and Motivation](#purpose-and-motivation)
-* [Overview of the Dashboard](#overview)
-* [Dashboard Sketch and Preview](#dashboard-sketch-and-preview)
-* [Meet our Team](#meet-our-team)
+* [Purpose and Motivation](#purpose-and-motivation)
+* [Preview and Description](#dashboard-preview-and-description)
+* [Installation](#installation)
+* [Meet the Team](#meet-the-team)
+* [Contributing](#contributing)
+* [Support](#support)
+* [Code of Conduct](#code-of-conduct)
+* [License](#license)
 
 ## Purpose and Motivation
 
-Being unprepared for certain weather conditions can make or break a trip. Our motivation with citytemp was to create a realiable tool that US travelers can use to make informed decisions on which areas to visit and plan activities accordingly during their travels. Our app uses real historical data to assist travel enthusiasts in understanding weather fluctuations, temperatures, and precipitation levels across various states/cities in the United States and enables them to plan well for their upcoming trips to avoid weather disruptions and unwanted suprises.
+Being unprepared for certain weather conditions can make or break a trip. Our motivation with `citytemp` was to create a realiable tool that US travelers can use to make informed decisions on which areas to visit and plan activities accordingly during their travels. Our app uses real historical data to assist travel enthusiasts in understanding weather fluctuations, temperatures, and precipitation levels across various states/cities in the United States and enables them to plan well for their upcoming trips to avoid weather disruptions and unwanted suprises.
 
 ## Dashboard Preview and Description
 
@@ -25,38 +28,49 @@ Being unprepared for certain weather conditions can make or break a trip. Our mo
 
 Our dashboard is presents observed temperature and precipitation data from the [weather_forcasts.csv](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-12-20/weather_forecasts.csv) in tidytuesday. 
 
-By using the control panel on the left side, users can select the range of months and city and state of interest and whether they would like to observe visualizations based on temperature or percipitation levels. Based on these user selections, our app will present the following: 
+The `citytemp` app contains two tabs: 
 
-1. Summary metrics including average, mininimum, and maximum temperature/precipitation. 
-2. A map showing average temperature or precipitation levels based on the range chosen by the user. 
-City points are coloured from low to high temperature or precipitation levels. 
-3. A line plot showing the distribution of low and high observed temperatures and precipitation levels. 
-4. Bar charts displaying the top 10 cities in the chosen state with the highest or lowest average temperature/precipitation.
+In the `Temperature or Precipitation Trends` tab, users specify the range of months of their interest (eg. 1 to 4 for January to June), the city and state of their interest (eg. TX, Austin), and whether they would like to observe temperature levels or percipitation levels.
+
+Based on these user selections, our app presents the following:
+
+  - Summary metrics including average, mininimum, and maximum temperature/precipitation. 
+  - A map showing average temperature or precipitation levels based on the range chosen by the user. City points are coloured from low to high temperature or precipitation levels. 
+  - A line plot showing the distribution of low and high observed temperatures and precipitation levels. 
+
+In the `City Ranking by Temp/Rain` tab, users select the US state of their interest, the month they would like to observe data for, and whether they would like to observe high or low temperature/precipitation records. Based on theses selections, our app presents bar graphs for the top 10 cities in the specified state with the highest or lowest average monthly temperature/precipitation.
 
 ## Installation
 
-You can download this file, create a conda environment and activate it as follows.
+To install `citytemp` locally, you can:
 
-conda env create -f environment.yaml
-conda activate van-crime
-You can view the source code in src/app.py.
+1. Clone this repository.
+2. Run the following commands your R console to install the required libraries locally:
 
-Run locally
-Make sure you are in the root directory of the repository. Then, run the following command in Terminal:
+```{r}
+install.packages(c('dplyr', 'plotly', 'ggplot2', 'leaflet', 'geosphere', 'leaflet.extras', 'sf', 'shinydashboard'))
+```
 
-python src/app.py
-You will be given an URL to use the dashboard.
+3. Finally, run the following command to run the app locally!
 
+```{r}
+RScript src/app.R
+```
 
-## Meet Our Team
+## Meet The Team
 
-* Eyre Hong  
-* Renee Kwon
-* Sneha Sunil
-* Vincent Ho 
+The creators of `citytemp` are students of the MDS Program at the University of British Columbia. This project was created for the DSCI 532 (Data Visualization II) course. 
 
-Feedback and suggestions are always welcome! Please read [the contributing
-guidelines](https://github.com/UBC-MDS/citytemp/blob/main/CONTRIBUTING.md)
+* [Eyre Hong](https://github.com/eyrexh)
+* [Renee Kwon](https://github.com/renee-kwon)
+* [Sneha Sunil](https://github.com/snesunil)
+* [Vincent Ho](https://github.com/vincentho32)
+
+# Contributing
+
+Feedback and suggestions are always welcome! 
+
+Please read [the contributing guidelines](https://github.com/UBC-MDS/citytemp/blob/main/CONTRIBUTING.md)
 to get started.
 
 ## Support
@@ -71,4 +85,4 @@ In the interest of fostering an open and welcoming environment, we as contributo
 of these points can be found in [`CODE_OF_CONDUCT.md`](https://github.com/UBC-MDS/citytemp/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
-The citytemp Dashboard was created by Eyre Hong, Renee Kwon, Sneha Sunil, Vincent Ho (UBC MDS). It is licensed under the terms of the MIT license.
+The citytemp Dashboard is licensed under the terms of the MIT license.
