@@ -4,6 +4,8 @@ Welcome! Thank you for visiting the citytemp project repository.
 
 If you're an avid traveller and you want to be prepared for the weather conditions at your next US destination, our app is for you! 
 
+[Link to the citytemp app](https://tsz-fung-ho.shinyapps.io/citytemp/)
+
 To learn more about the app, you can jump to one of the sections below or keep scrolling.
 
 * [Usage](#usage)
@@ -12,18 +14,9 @@ To learn more about the app, you can jump to one of the sections below or keep s
 * [Dashboard Sketch and Preview](#dashboard-sketch-and-preview)
 * [Meet our Team](#meet-our-team)
 
-## Usage
-
-#### Using `citytemp` online 
-[Deployed App Link - citytemp](https://tsz-fung-ho.shinyapps.io/citytemp/)
-
-#### Running `citytemp` locally
-
-[]
-
 ## Purpose and Motivation
 
-Being unprepared for certain weather conditions can make or break a trip. Our motivation with citytemp was to create a realiable tool that US travelers can use to make informed decisions on which areas to visit and plan activities accordingly during their travels. Our app uses real historical data to assist travel enthusiasts in understanding weather fluctuations, temperatures, and precipitation levels across various states/cities in the United States and enables them to plan well for their upcoming trips to avoid weather disruptions and unwanted suprises.
+Being unprepared for certain weather conditions can make or break a trip. Our motivation with citytemp was to create a realiable tool that US travelers can use to make informed decisions on which US areas to visit and plan activities accordingly during their travels. Our app uses real historical data to assist travel enthusiasts in understanding weather fluctuations, temperatures, and precipitation levels across various states/cities in the United States and enables them to plan well for their upcoming trips to avoid weather disruptions and unwanted suprises.
 
 ## Overview 
 
@@ -46,6 +39,16 @@ These options will allow users to identify trends in temperature/precipitation o
 ## Dashboard Sketch and Preview
 
 ![](img/Sketch.png)
+
+## Usage
+
+#### Using `citytemp` online 
+[Deployed App Link - citytemp](https://tsz-fung-ho.shinyapps.io/citytemp/)
+
+#### Running `citytemp` locally
+
+[]
+
 
 ## Meet Our Team
 
