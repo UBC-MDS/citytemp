@@ -150,6 +150,28 @@ server <- function(input, output, session) {
     }
   })
   
+  # --------------------------------------Map plot start here------------------------------------
+  
+  map_data <- reactive({
+    weather %>% filter(city == input$city ) %>%
+      filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
+      group_by(city) %>% 
+      summarize(
+        avg_temp = round(mean(observed_temp, na.rm =TRUE), 2),
+        avg_prec = round(mean(observed_precip, na.rm =TRUE), 2),
+      )
+  })
+  
+  map_data_color <- reactive({
+    weather %>% 
+      filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
+      group_by(city) %>% 
+      summarize(
+        avg_temp = round(mean(observed_temp, na.rm =TRUE), 2),
+        avg_prec = round(mean(observed_precip, na.rm =TRUE), 2),
+      )
+  })
+  
   # Create leaflet map
   output$map <- renderLeaflet({
     leaflet(cities) |>
@@ -158,33 +180,53 @@ server <- function(input, output, session) {
         ~ lon,
         ~ lat,
         popup = paste0(
-          "City: ",
+          "<B>City: </B>",
           cities$city,
           "<br>",
-          "State: ",
+          "<B>State: </B>",
           cities$state,
           "<br>",
-          "Elevation: ",
+          "<B>Elevation: </B>",
           cities$elevation,
           " m<br>",
-          "Distance to Coast: ",
+          "<B>Distance to Coast: </B>",
           cities$distance_to_coast,
-          " mi<br>",
-          "Average Annual Precipitation: ",
-          cities$avg_annual_precip,
-          " in"
+          " mi<br>"
         ),
         layerId = cities$city,
         label = cities$city,
-        color = "navy",
+        color = 
+          if (input$data_type == "Temperature") {
+            if_else(map_data_color()$avg_temp <= 40, "#FEF001", 
+                                if_else(map_data_color()$avg_temp <= 60, "#FD9A01", 
+                                                if_else(map_data_color()$avg_temp <= 80, "#FD6104", "#F00505")))
+          }
+        else{
+          if_else(map_data_color()$avg_prec <= 0.05, "#BCD2E8", 
+                          if_else(map_data_color()$avg_prec <= 0.15, "#73A5C6", 
+                                          if_else(map_data_color()$avg_prec <= 0.25, "#2E5984", "#1E3F66")))
+        }
+        ,
         radius = 5,
         stroke = FALSE,
-        fillOpacity = 0.4
-      ) |>
-      setView(-100, 40, zoom = 3.3)
+        fillOpacity = 0.5
+      ) %>%
+    addLegend(title =
+                if (input$data_type == "Temperature"){
+                  "Average Temperature (°F)"}
+              else{"Average Precipitation (inches)"}
+              ,
+              colors =
+                if (input$data_type == "Temperature"){
+                  c("#FEF001", "#FD9A01", "#FD6104", "#F00505")}
+              else{c("#BCD2E8", "#73A5C6", "#2E5984", "#1E3F66")},
+              labels = 
+                if (input$data_type == "Temperature"){
+                c("< 40", "40 - 60", "60 - 80", "80 <")}
+              else{c("< 0.05", "0.05 - 0.15", "0.15 - 0.25", "0.25 <")}
+              ) %>%
+      setView(-100, 40, zoom = 3)
   })
-  
-  
   
   # --------------------------------------City Ranking Tab start here------------------------------------
   
