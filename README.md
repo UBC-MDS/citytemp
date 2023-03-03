@@ -5,7 +5,7 @@ Welcome! Thank you for visiting the citytemp project repository.
 If you're an avid traveller and you want to be prepared for the weather conditions at your next US destination, our app is for you! 
 
 [--- link to be updated --]
-[Link to the citytemp app](https://reneekwon.shinyapps.io/citytemp/)
+[Link to the citytemp app](https://snesunil.shinyapps.io/citytemp/)
 
 To learn more about the app, you can jump to one of the sections below or keep scrolling.
 
