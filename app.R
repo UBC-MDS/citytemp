@@ -36,7 +36,7 @@ ui <- dashboardPage(
     tabItem(tabName = "temp_precip_trends",
             fluidRow(
               column(
-                width = 4,
+                width = 3,
                 # Add slider input for selecting range of months
                 sliderInput(
                   "month_range",
@@ -61,8 +61,7 @@ ui <- dashboardPage(
                   selected = "Temperature"
                 )
               ),
-              column(width = 8,
-                     
+              column(width = 9,
                      # Added a row for summary statistics
                      fluidRow(
                        
@@ -81,7 +80,7 @@ ui <- dashboardPage(
     tabItem(tabName = "city_ranking",
             fluidRow(
               column(
-                width = 4,
+                width = 3,
                 selectInput("statename",
                             "Select a state:",
                             choices = unique(weather_bar$state)),
@@ -95,7 +94,7 @@ ui <- dashboardPage(
                             choices = unique(weather_bar$month))
               ),
               column(
-                width = 8,
+                width = 9,
                 plotOutput("temp_barplot"),
                 plotOutput("rain_barplot")
               )
@@ -306,7 +305,7 @@ server <- function(input, output, session) {
     }
     else{
       valueBox(
-        paste0(stat_data()$max_prec), "MAX", icon = icon("fa-regular fa-cloud-sun-rain"),
+        paste0(stat_data()$max_prec, " in."), "MAX", icon = icon("fa-regular fa-cloud-sun-rain"),
         color = "red")
     }
   })
@@ -321,7 +320,7 @@ server <- function(input, output, session) {
     }
     else{
       valueBox(
-        paste0(stat_data()$min_prec), "MIN", icon = icon("fa-regular fa-cloud-sun-rain"),
+        paste0(stat_data()$min_prec, " in."), "MIN", icon = icon("fa-regular fa-cloud-sun-rain"),
         color = "blue")
     }
   })
@@ -336,7 +335,7 @@ server <- function(input, output, session) {
     }
     else{
       valueBox(
-        paste0(stat_data()$avg_prec), "AVG", icon = icon("fa-regular fa-cloud-sun-rain"),
+        paste0(stat_data()$avg_prec, " in."), "AVG", icon = icon("fa-regular fa-cloud-sun-rain"),
         color = "green")
     }
   })
