@@ -29,7 +29,7 @@ Our dashboard is presents observed temperature and precipitation data from the [
 
 The `citytemp` app contains two tabs: 
 
-In the `Temperature or Precipitation Trends` tab, users specify the range of months of their interest (eg. 1 to 6 for January to June), the city and state of their interest (eg. TX, Austin), and whether they would like to observe temperature levels or precipitation levels.
+In the `City Map with Temp/Rain Trends` tab, users specify the range of months of their interest (eg. 1 to 6 for January to June), the city and state of their interest (eg. TX, Austin), and whether they would like to observe temperature levels or precipitation levels.
 
 Based on these user selections, our app presents the following:
 
