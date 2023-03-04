@@ -80,7 +80,9 @@ ui <- dashboardPage(
             ),
             # Add main panel with plot output
             leafletOutput("map"),
-            plotOutput("line_plot")
+            plotOutput("line_plot",
+                       height = "200px",
+                       width = "100%")
             
           )
         )
@@ -236,6 +238,7 @@ server <- function(input, output, session) {
              aes(x = month, y = observed_temp, col = high_or_low)) +
         geom_point() +
         geom_line() +
+        theme_classic() +
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
         labs(x = "Month", y = "Temperature (°F)", color = "High/Low") +
         ggtitle(paste("Temperature Distribution for", input$city, ",", input$state)) +
@@ -246,6 +249,7 @@ server <- function(input, output, session) {
       ggplot(line_data(), aes(x = month, y = observed_precip)) +
         geom_point(color = "violetred") +
         geom_line(color = "lightblue") +
+        theme_classic() +
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
         labs(x = "Month", y = "Precipitation") +
         ggtitle(paste("Precipitation Distribution for", input$city, ",", input$state)) +
