@@ -19,87 +19,103 @@ weather_bar$month <- month.name[weather_bar$month]
 ui <- dashboardPage(
   dashboardHeader(title = "Weather Dashboard"),
   
-  dashboardSidebar(sidebarMenu(
-    menuItem(
-      "Temperature or Precipitation Trends",
-      tabName = "temp_precip_trends"
-      
-    ),
-    menuItem(
-      "City Ranking by Temp/Rain",
-      tabName = "city_ranking"
-      
+  dashboardSidebar(
+    sidebarMenu(
+      id = "tabs",
+      menuItem(
+        "City Map with Temp/Rain Trends", 
+        tabName = "temp_precip_trends", 
+        icon = icon("line-chart")
+      ),
+      menuItem(
+        "City Ranking by Temp/Rain", 
+        tabName = "city_ranking", 
+        icon = icon("bar-chart")
+      )
     )
-  )),
-  dashboardBody(tabItems(
-    # Tab 1: Temperature or Precipitation Trends
-    tabItem(tabName = "temp_precip_trends",
+  ),
+  
+  dashboardBody(
+    tabItems(
+      tabItem(
+        tabName = "temp_precip_trends",
+        fluidRow(
+          column(
+            width = 3,
+            # Add slider input for selecting range of months
+            sliderInput(
+              "month_range",
+              "Select Month Range:",
+              min = 1,
+              max = 12,
+              value = c(1, 12)
+            ),
+            # Add dropdown menu input for selecting state
+            selectInput(
+              "state",
+              "Select State:",
+              choices = unique(weather$state)
+            ),
+            # Add dropdown menu input for selecting city
+            selectInput(
+              "city",
+              "Select City:",
+              choices = NULL
+            ),
+            # Add radio button input for selecting temperature or precipitation
+            radioButtons(
+              "data_type",
+              "Select Type:",
+              choices = c("Temperature", "Precipitation"),
+              selected = "Temperature"
+            )
+          ),
+          column(
+            width = 9,
+            # Added a row for summary statistics
             fluidRow(
-              column(
-                width = 3,
-                # Add slider input for selecting range of months
-                sliderInput(
-                  "month_range",
-                  "Select Month Range:",
-                  min = 1,
-                  max = 12,
-                  value = c(1, 12)
-                ),
-                # Add dropdown menu input for selecting state
-                selectInput("state",
-                            "Select State:",
-                            choices = unique(weather$state)),
-                # Add dropdown menu input for selecting city
-                selectInput("city",
-                            "Select City:",
-                            choices = NULL),
-                # Add radio button input for selecting temperature or precipitation
-                radioButtons(
-                  "data_type",
-                  "Select Type:",
-                  choices = c("Temperature", "Precipitation"),
-                  selected = "Temperature"
-                )
-              ),
-              column(width = 9,
-                     # Added a row for summary statistics
-                     fluidRow(
-                       
-                       valueBoxOutput("avgBox"),
-                       
-                       valueBoxOutput("maxBox"),
-                       
-                       valueBoxOutput("minBox")
-                     ),
-                     
-                     # Add main panel with plot output
-                     plotOutput("line_plot"),
-                     leafletOutput("map"))
-            )),
-    # Tab 2: City Ranking by Temperature/Precipitation
-    tabItem(tabName = "city_ranking",
-            fluidRow(
-              column(
-                width = 3,
-                selectInput("statename",
-                            "Select a state:",
-                            choices = unique(weather_bar$state)),
-                selectInput(
-                  "highlow",
-                  "Select highest or lowest temperature:",
-                  choices = c("Highest" = "high", "Lowest" = "low")
-                ),
-                selectInput("month",
-                            "Select a month:",
-                            choices = unique(weather_bar$month))
-              ),
-              column(
-                width = 9,
-                plotOutput("temp_barplot"),
-                plotOutput("rain_barplot")
-              )
-            ))
-  ))
+              valueBoxOutput("avgBox"),
+              valueBoxOutput("maxBox"),
+              valueBoxOutput("minBox")
+            ),
+            # Add main panel with plot output
+            leafletOutput("map"),
+            plotOutput("line_plot")
+            
+          )
+        )
+      ),
+      
+      tabItem(
+        tabName = "city_ranking",
+        fluidRow(
+          column(
+            width = 3,
+            selectInput(
+              "statename",
+              "Select a state:",
+              choices = unique(weather_bar$state)
+            ),
+            selectInput(
+              "highlow",
+              "Select highest or lowest temperature:",
+              choices = c("Highest" = "high", "Lowest" = "low")
+            ),
+            selectInput(
+              "month",
+              "Select a month:",
+              choices = unique(weather_bar$month)
+            )
+          ),
+          column(
+            width = 9,
+            plotOutput("temp_barplot"),
+            plotOutput("rain_barplot")
+          )
+        )
+      )
+    )
+  )
 )
 
 # Define server logic
@@ -119,41 +135,7 @@ server <- function(input, output, session) {
                       choices = unique(weather$city[weather$state == input$state]))
   })
   
-  # Filter data based on user inputs
-  line_data <- reactive({
-    weather %>% filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
-      filter(state == input$state, city == input$city) %>%
-      group_by(month, high_or_low) %>%
-      summarise(
-        observed_temp = mean(observed_temp, na.rm = TRUE),
-        observed_precip = mean(observed_precip, na.rm = TRUE)
-      )
-  })
-  
-  # Create line plot based on filtered data and user data type input
-  output$line_plot <- renderPlot({
-    if (input$data_type == "Temperature") {
-      ggplot(line_data(),
-             aes(x = month, y = observed_temp, col = high_or_low)) +
-        geom_point() +
-        geom_line() +
-        scale_x_continuous(breaks = seq(1, 12, by = 1)) +
-        labs(x = "Month", y = "Temperature (°F)", color = "High/Low") +
-        ggtitle(paste("Temperature Distribution for", input$city, ",", input$state)) +
-        theme(plot.title = element_text(size=20, face="bold", family="Palatino", hjust = 0.5))
 
-    }
-    else{
-      ggplot(line_data(), aes(x = month, y = observed_precip)) +
-        geom_point(color = "violetred") +
-        geom_line(color = "lightblue") +
-        scale_x_continuous(breaks = seq(1, 12, by = 1)) +
-        labs(x = "Month", y = "Precipitation") +
-        ggtitle(paste("Precipitation Distribution for", input$city, ",", input$state)) +
-        theme(plot.title = element_text(size=20, face="bold", family="Palatino", hjust = 0.5))
-    }
-  })
-  
   # --------------------------------------Map plot start here------------------------------------
   
   map_data <- reactive({
@@ -202,35 +184,76 @@ server <- function(input, output, session) {
         color = 
           if (input$data_type == "Temperature") {
             if_else(map_data_color()$avg_temp <= 40, "#FEF001", 
-                                if_else(map_data_color()$avg_temp <= 60, "#FD9A01", 
-                                                if_else(map_data_color()$avg_temp <= 80, "#FD6104", "#F00505")))
+                    if_else(map_data_color()$avg_temp <= 60, "#FD9A01", 
+                            if_else(map_data_color()$avg_temp <= 80, "#FD6104", "#F00505")))
           }
         else{
           if_else(map_data_color()$avg_prec <= 0.05, "#BCD2E8", 
-                          if_else(map_data_color()$avg_prec <= 0.15, "#73A5C6", 
-                                          if_else(map_data_color()$avg_prec <= 0.25, "#2E5984", "#1E3F66")))
+                  if_else(map_data_color()$avg_prec <= 0.15, "#73A5C6", 
+                          if_else(map_data_color()$avg_prec <= 0.25, "#2E5984", "#1E3F66")))
         }
         ,
         radius = 5,
         stroke = FALSE,
         fillOpacity = 0.5
       ) %>%
-    addLegend(title =
-                if (input$data_type == "Temperature"){
-                  "Average Temperature (°F)"}
-              else{"Average Precipitation (inches)"}
-              ,
-              colors =
-                if (input$data_type == "Temperature"){
-                  c("#FEF001", "#FD9A01", "#FD6104", "#F00505")}
-              else{c("#BCD2E8", "#73A5C6", "#2E5984", "#1E3F66")},
-              labels = 
-                if (input$data_type == "Temperature"){
-                c("< 40", "40 - 60", "60 - 80", "80 <")}
-              else{c("< 0.05", "0.05 - 0.15", "0.15 - 0.25", "0.25 <")}
-              ) %>%
+      addLegend(title =
+                  if (input$data_type == "Temperature"){
+                    "Average Temperature (°F)"}
+                else{"Average Precipitation (inches)"}
+                ,
+                colors =
+                  if (input$data_type == "Temperature"){
+                    c("#FEF001", "#FD9A01", "#FD6104", "#F00505")}
+                else{c("#BCD2E8", "#73A5C6", "#2E5984", "#1E3F66")},
+                labels = 
+                  if (input$data_type == "Temperature"){
+                    c("< 40", "40 - 60", "60 - 80", "80 <")}
+                else{c("< 0.05", "0.05 - 0.15", "0.15 - 0.25", "0.25 <")}
+      ) %>%
       setView(-100, 40, zoom = 3)
   })
+  
+# --------------------------------------Line plot start here------------------------------------
+  
+  
+  # Filter data based on user inputs
+  line_data <- reactive({
+    weather %>% filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
+      filter(state == input$state, city == input$city) %>%
+      group_by(month, high_or_low) %>%
+      summarise(
+        observed_temp = mean(observed_temp, na.rm = TRUE),
+        observed_precip = mean(observed_precip, na.rm = TRUE)
+      )
+  })
+  
+  
+  # Create line plot based on filtered data and user data type input
+  output$line_plot <- renderPlot({
+    if (input$data_type == "Temperature") {
+      ggplot(line_data(),
+             aes(x = month, y = observed_temp, col = high_or_low)) +
+        geom_point() +
+        geom_line() +
+        scale_x_continuous(breaks = seq(1, 12, by = 1)) +
+        labs(x = "Month", y = "Temperature (°F)", color = "High/Low") +
+        ggtitle(paste("Temperature Distribution for", input$city, ",", input$state)) +
+        theme(plot.title = element_text(size=20, face="bold", family="Palatino", hjust = 0.5))
+
+    }
+    else{
+      ggplot(line_data(), aes(x = month, y = observed_precip)) +
+        geom_point(color = "violetred") +
+        geom_line(color = "lightblue") +
+        scale_x_continuous(breaks = seq(1, 12, by = 1)) +
+        labs(x = "Month", y = "Precipitation") +
+        ggtitle(paste("Precipitation Distribution for", input$city, ",", input$state)) +
+        theme(plot.title = element_text(size=20, face="bold", family="Palatino", hjust = 0.5))
+    }
+  })
+  
+  
   
   # --------------------------------------City Ranking Tab start here------------------------------------
   
