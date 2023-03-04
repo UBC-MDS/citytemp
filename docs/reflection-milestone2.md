@@ -3,13 +3,15 @@
 
 ## What went well?
 
-The project successfully tied the plots to the drop-down menus and fill-in options provided to users. The fundamental functionalists of the proposed plots were also implemented, and the overall design of the dashboard resembles it well. 
+The project successfully tied the plots to the drop-down menus and fill-in options provided to users. The fundamental functionalists of the proposed plots were also implemented, and the overall design of the dashboard resembles it well.
 
-We were able to create two tabs: City Map with Temp/Rain Trends, and City Ranking by Temp/Rain. The City Map with Temp/Rain Trends tab allows users to select a range of months, cities and states, and observe temperature or precipitation levels. The app then presents summary metrics, a map showing the average temperature or precipitation levels, and a line plot showing the temperature or precipitation distribution. The City Ranking by Temp/Rain tab enables users to select a US state, and a specific month, and observe high or low temperature/precipitation records for the top 10 cities in that state.
+We were able to create two tabs: City Map with Temp/Rain Trends, and City Ranking by Temp/Rain. The City Map with Temp/Rain Trends tab allows users to select a range of months, cities and states, and observe temperature or precipitation levels. The app then presents summary metrics, a map showing the average temperature or precipitation levels, and a line plot showing the temperature or precipitation distribution. The City Ranking by Temp/Rain tab enables users to select a US state, and a specific month, and observe high or low temperature/precipitation records in a specific state.
 
 ## What changed?
 
 Originally, our aim was to create a map that shows the differences in temperature and precipitation by the state for a specific month. However, after considering that our data is primarily city-based and our dashboard is named `citytemp`, we decided to focus on displaying temperature and precipitation differences by cities instead.
+
+In the second tab of the dashboard, we have cities ranked by temperature and precipitation in different states. Originally, in the sketch, we planned to have a bar chart that would display the top 10 states or cities with the highest temperature or precipitation. However, upon reflection, we decided to display a bar chart that shows the ranking of all cities in a particular state, as it is more informative for travelers who want to visit a specific state.
 
 ## Future improvements
 

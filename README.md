@@ -23,7 +23,7 @@ Being unprepared for certain weather conditions can make or break a trip. Our mo
 
 ## Dashboard Preview and Description
 
-[--- GIF will go here --]
+<img src='img/demo.gif' width="1000" height="500">
 
 Our dashboard is presents observed temperature and precipitation data from the [weather_forcasts.csv](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-12-20/weather_forecasts.csv) in tidytuesday. 
 
@@ -37,7 +37,7 @@ Based on these user selections, our app presents the following:
   - A map showing the average temperature or precipitation levels based on the range chosen by the user. City points are coloured from low to high temperature or precipitation levels. 
   - A line plot showing the distribution of low and high observed temperatures and precipitation levels. 
 
-In the `City Ranking by Temp/Rain` tab, users select the US state of their interest, the month they would like to observe data for, and whether they would like to observe high or low temperature/precipitation records. Based on these selections, our app presents bar graphs for the top 10 cities in the specified state with the highest or lowest average monthly temperature/precipitation.
+In the `City Ranking by Temp/Rain` tab, users select the US state of their interest, the month they would like to observe data for, and whether they would like to observe high or low temperature/precipitation records. Based on these selections, our app presents bar graphs for the cities ranking in the specified state with the highest or lowest average monthly temperature/precipitation.
 
 ## Installation
 
