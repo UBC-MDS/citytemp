@@ -146,7 +146,7 @@ server <- function(input, output, session) {
       group_by(city) %>% 
       summarize(
         avg_temp = round(mean(observed_temp, na.rm =TRUE), 2),
-        avg_prec = round(mean(observed_precip, na.rm =TRUE), 2),
+        avg_prec = round(mean(precip, na.rm =TRUE), 2),
       )
   })
   
@@ -156,7 +156,7 @@ server <- function(input, output, session) {
       group_by(city) %>% 
       summarize(
         avg_temp = round(mean(observed_temp, na.rm =TRUE), 2),
-        avg_prec = round(mean(observed_precip, na.rm =TRUE), 2),
+        avg_prec = round(mean(precip, na.rm =TRUE), 2),
       )
   })
   
@@ -226,7 +226,7 @@ server <- function(input, output, session) {
       group_by(month, high_or_low) %>%
       summarise(
         observed_temp = mean(observed_temp, na.rm = TRUE),
-        observed_precip = mean(observed_precip, na.rm = TRUE)
+        precip = mean(precip, na.rm = TRUE)
       )
   })
   
@@ -246,7 +246,7 @@ server <- function(input, output, session) {
 
     }
     else{
-      ggplot(line_data(), aes(x = month, y = observed_precip)) +
+      ggplot(line_data(), aes(x = month, y = precip)) +
         geom_point(color = "violetred") +
         geom_line(color = "lightblue") +
         theme_classic() +
@@ -269,7 +269,7 @@ server <- function(input, output, session) {
                              month == input$month) %>%
       group_by(city) %>% summarize(
         avg_temp = mean(observed_temp, na.rm = TRUE),
-        avg_rain = mean(observed_precip, na.rm = TRUE)
+        avg_rain = mean(precip, na.rm = TRUE)
       )
   })
   
@@ -321,9 +321,9 @@ server <- function(input, output, session) {
         avg_temp = round(mean(observed_temp, na.rm =TRUE), 2),
         min_temp = min(observed_temp, na.rm =TRUE),
         max_temp = max(observed_temp, na.rm =TRUE),
-        avg_prec = round(mean(observed_precip, na.rm =TRUE), 2),
-        min_prec= min(observed_precip, na.rm =TRUE),
-        max_prec = max(observed_precip, na.rm =TRUE)
+        avg_prec = round(mean(precip, na.rm =TRUE), 2),
+        min_prec= min(precip, na.rm =TRUE),
+        max_prec = max(precip, na.rm =TRUE)
       )
   })
   
