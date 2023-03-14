@@ -50,7 +50,7 @@ To install `citytemp` locally, you can:
 2. Run the following command in your R console to install the required libraries locally:
 
 ```{r}
-install.packages(c('dplyr', 'plotly', 'ggplot2', 'leaflet', 'geosphere', 'leaflet.extras', 'sf', 'shinydashboard'))
+install.packages(c('dplyr', 'plotly', 'ggplot2', 'leaflet', 'geosphere', 'leaflet.extras', 'sf', 'shinydashboard', 'shinybusy'))
 ```
 
 3. Finally, run the following command to run the app locally!

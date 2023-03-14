@@ -7,6 +7,7 @@ library(geosphere)
 library(leaflet.extras)
 library(sf)
 library(shinydashboard)
+library(shinybusy)
 
 weather <- read.csv("data/processed/weather_pro.csv")
 cities <- read.csv("data/processed/cities.csv")
@@ -17,6 +18,7 @@ weather_bar$month <- month.name[weather_bar$month]
 
 # Define UI
 ui <- dashboardPage(
+  
   dashboardHeader(title = "Weather Dashboard"),
   
   dashboardSidebar(
@@ -36,6 +38,10 @@ ui <- dashboardPage(
   ),
   
   dashboardBody(
+    
+    # add spinner
+    add_busy_spinner(spin = "cube-grid", margins = c(0, 10), color = "#FFF"),
+    
     tabItems(
       tabItem(
         tabName = "temp_precip_trends",
@@ -129,6 +135,8 @@ ui <- dashboardPage(
 
 # Define server logic
 server <- function(input, output, session) {
+  
+  
   # Update city and state input based on map clicks
   observeEvent(input$map_marker_click, {
     updateSelectInput(session, "city", selected = input$map_marker_click$id)
