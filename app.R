@@ -145,7 +145,7 @@ server <- function(input, output, session) {
       filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
       group_by(city) %>% 
       summarize(
-        avg_temp = round(mean(observed_temp, na.rm =TRUE), 2),
+        avg_temp = round(mean(temp_f, na.rm =TRUE), 2),
         avg_prec = round(mean(precip, na.rm =TRUE), 2),
       )
   })
@@ -155,7 +155,7 @@ server <- function(input, output, session) {
       filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
       group_by(city) %>% 
       summarize(
-        avg_temp = round(mean(observed_temp, na.rm =TRUE), 2),
+        avg_temp = round(mean(temp_f, na.rm =TRUE), 2),
         avg_prec = round(mean(precip, na.rm =TRUE), 2),
       )
   })
@@ -225,7 +225,7 @@ server <- function(input, output, session) {
       filter(state == input$state, city == input$city) %>%
       group_by(month, high_or_low) %>%
       summarise(
-        observed_temp = mean(observed_temp, na.rm = TRUE),
+        temp_f = mean(temp_f, na.rm = TRUE),
         precip = mean(precip, na.rm = TRUE)
       )
   })
@@ -235,7 +235,7 @@ server <- function(input, output, session) {
   output$line_plot <- renderPlot({
     if (input$data_type == "Temperature") {
       ggplot(line_data(),
-             aes(x = month, y = observed_temp, col = high_or_low)) +
+             aes(x = month, y = temp_f, col = high_or_low)) +
         geom_point() +
         geom_line() +
         theme_classic() +
@@ -268,7 +268,7 @@ server <- function(input, output, session) {
                              high_or_low == input$highlow &
                              month == input$month) %>%
       group_by(city) %>% summarize(
-        avg_temp = mean(observed_temp, na.rm = TRUE),
+        avg_temp = mean(temp_f, na.rm = TRUE),
         avg_rain = mean(precip, na.rm = TRUE)
       )
   })
@@ -318,9 +318,9 @@ server <- function(input, output, session) {
       filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
       group_by(city) %>% 
       summarize(
-        avg_temp = round(mean(observed_temp, na.rm =TRUE), 2),
-        min_temp = min(observed_temp, na.rm =TRUE),
-        max_temp = max(observed_temp, na.rm =TRUE),
+        avg_temp = round(mean(temp_f, na.rm =TRUE), 2),
+        min_temp = min(temp_f, na.rm =TRUE),
+        max_temp = max(temp_f, na.rm =TRUE),
         avg_prec = round(mean(precip, na.rm =TRUE), 2),
         min_prec= min(precip, na.rm =TRUE),
         max_prec = max(precip, na.rm =TRUE)
