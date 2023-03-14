@@ -40,7 +40,7 @@ ui <- dashboardPage(
   dashboardBody(
     
     # add spinner
-    add_busy_spinner(spin = "cube-grid", margins = c(0, 10), color = "#FFF"),
+    shinybusy::add_busy_spinner(spin = "fading-circle", margins = c(0, 8), color = "#FFF"),
     
     tabItems(
       tabItem(
@@ -135,6 +135,10 @@ ui <- dashboardPage(
 
 # Define server logic
 server <- function(input, output, session) {
+  
+  # spinner
+  show_spinner() 
+  hide_spinner()
   
   
   # Update city and state input based on map clicks
