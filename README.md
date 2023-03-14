@@ -1,5 +1,8 @@
 # citytemp
 
+[![shiny-deploy](https://github.com/UBC-MDS/citytemp/actions/workflows/deploy-app.yaml/badge.svg)](https://github.com/UBC-MDS/citytemp/actions/workflows/deploy-app.yaml) [![Test app w/ {renv}](https://github.com/UBC-MDS/citytemp/actions/workflows/testing.yaml/badge.svg)](https://github.com/UBC-MDS/citytemp/actions/workflows/testing.yaml)
+
+
 Welcome! Thank you for visiting the citytemp project repository.
 
 If you're an avid traveller and you want to be prepared for the weather conditions at your next US destination, our app is for you! 
