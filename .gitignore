@@ -2,4 +2,5 @@ processed.R
 rsconnect/
 
 .Rhistory
-processed_city.ipynb
+processed_weather.ipynb
+processed_cities.ipynb
