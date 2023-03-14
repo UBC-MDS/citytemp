@@ -3,6 +3,8 @@
 on:
   push:
     branches: [main, master]
+  pull_request:
+    branches: [main, master]
 
 name: shiny-deploy
 
@@ -29,8 +31,8 @@ jobs:
       - name: Authorize and deploy app
         env: 
           # Provide your app name, account name, and server to be deployed below
-          APPNAME: feederwatch_app
-          ACCOUNT: flor
+          APPNAME: citytemp
+          ACCOUNT: eyrexh
           SERVER: shinyapps.io # server to deploy
         run: |
           rsconnect::setAccountInfo("${{ secrets.RSCONNECT_USER }}", "${{ secrets.RSCONNECT_TOKEN }}", "${{ secrets.RSCONNECT_SECRET }}")
