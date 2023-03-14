@@ -340,7 +340,7 @@ server <- function(input, output, session) {
   # create max summary statistic box
   output$maxBox <- renderValueBox({
     if (input$data_type == "Temperature") {
-      if (input$data_type == "Fareinheit") {
+      if (input$temp_metric == "Fareinheit") {
         valueBox(
           paste0(stat_data()$max_temp_ft, "°F"), "MAX", icon = icon("fa-light fa-sun"),
           color = "red")
@@ -365,7 +365,7 @@ server <- function(input, output, session) {
   # create min summary statistic box
   output$minBox <- renderValueBox({
     if (input$data_type == "Temperature") {
-      if (input$data_type == "Fareinheit") {
+      if (input$temp_metric == "Fareinheit") {
       valueBox(
         paste0(stat_data()$min_temp_ft, "°F"), "MIN", icon = icon("fa-light fa-sun"),
         color = "blue"
@@ -388,7 +388,7 @@ server <- function(input, output, session) {
   # create avg summary statistic box
   output$avgBox <- renderValueBox({
     if (input$data_type == "Temperature") {
-      if (input$data_type == "Fareinheit") {
+      if (input$temp_metric == "Fareinheit") {
       valueBox(
         paste0(stat_data()$avg_temp_ft, "°F"), "AVG", icon = icon("fa-light fa-sun"),
         color = "green"
