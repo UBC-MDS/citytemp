@@ -304,17 +304,28 @@ server <- function(input, output, session) {
   
   
   # Create bar chart of cities by temperature
+  
+  
+  
+  
+  
   output$temp_barplot <- renderPlot({
 
     t_unit <- ifelse(input$temp_unit == "Celsius", "°C", "°F")
     
+    num_bars <- nrow(bar_data())
+    
+    bartext_size <- 5 - log10(num_bars)
+    
+    label_size <- 18 - log10(num_bars)
+    
     ggplot(bar_data(), aes(x = avg_temp, y = reorder(city, avg_temp),fill= avg_temp)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="yellow", high="red") +
       geom_text(aes(label = paste0(sprintf("%.2f", avg_temp), t_unit)) ,
-                hjust = -0.1, size = 3, color = "black") +
+                hjust = -0.1, size = bartext_size, color = "black") +
       labs(
-        x = ifelse(input$temp_unit == "Celsius","Average Temperature (C)",
-                   "Average Temperature (F)"),
+        x = (ifelse(input$temp_unit == "Celsius","Average Temperature (C)",
+                   "Average Temperature (F)")),
         y = "City",
         title = paste0(
           "Cities in ",
@@ -325,17 +336,27 @@ server <- function(input, output, session) {
           input$month
         )
       ) +
-      guides(fill = FALSE) 
+      guides(fill = FALSE) +
+      theme(axis.text.y = element_text(size = label_size))
   })
   
   
   # Create bar chart of cities by precipitation
   output$rain_barplot <- renderPlot({
+    
+    
+    num_bars <- nrow(bar_data())
+    
+    bartext_size <- 5 - log10(num_bars)
+    
+    label_size <- 18 - log10(num_bars)
+    
+    
     ggplot(bar_data(), aes(x = avg_rain, y = reorder(city, avg_rain), fill = avg_rain)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="lightblue", high="darkblue") +
-      geom_text(aes(label = sprintf("%.5f", avg_rain)), hjust = -0.1, size = 3, color = "black") +
+      geom_text(aes(label = sprintf("%.5f", avg_rain)), hjust = -0.1,  size = bartext_size, color = "black") +
       labs(
-        x = "Average Precipitation",
+        x = "Average Precipitation (inch)",
         y = "City",
         title = paste0(
           "Cities in ",
@@ -344,7 +365,8 @@ server <- function(input, output, session) {
           input$month
         )
       )+
-      guides(fill = FALSE)
+      guides(fill = FALSE)+
+      theme(axis.text.y = element_text(size = label_size))
   })
   
   # --------------------------------------summary statistics box start here------------------------------------
