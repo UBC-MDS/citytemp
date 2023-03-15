@@ -337,9 +337,12 @@ server <- function(input, output, session) {
       filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
       group_by(city) %>% 
       summarize(
-        avg_temp = round(mean(temp_f, na.rm =TRUE), 2),
-        min_temp = min(temp_f, na.rm =TRUE),
-        max_temp = max(temp_f, na.rm =TRUE),
+        avg_temp_ft = round(mean(temp_f, na.rm =TRUE), 2),
+        min_temp_ft = min(temp_f, na.rm =TRUE),
+        max_temp_ft = max(temp_f, na.rm =TRUE),
+        avg_temp_cs = round(mean(temp_c, na.rm =TRUE), 2),
+        min_temp_cs = min(temp_c, na.rm =TRUE),
+        max_temp_cs = max(temp_c, na.rm =TRUE),
         avg_prec = round(mean(precip, na.rm =TRUE), 2),
         min_prec= min(precip, na.rm =TRUE),
         max_prec = max(precip, na.rm =TRUE)
@@ -349,10 +352,20 @@ server <- function(input, output, session) {
   # create max summary statistic box
   output$maxBox <- renderValueBox({
     if (input$data_type == "Temperature") {
-      valueBox(
-        paste0(stat_data()$max_temp, "°F"), "MAX", icon = icon("fa-light fa-sun"),
-        color = "red"
+      if (input$temp_metric == "Fareinheit") {
+        valueBox(
+          paste0(stat_data()$max_temp_ft, "°F"), "MAX", icon = icon("fa-light fa-sun"),
+          color = "red")
+      }
+      else {
+         {
+           valueBox(
+          paste0(stat_data()$max_temp_cs, "°C"), "MAX", icon = icon("fa-light fa-sun"),
+          color = "red"
+         
       )
+      }
+      }
     }
     else{
       valueBox(
@@ -364,10 +377,18 @@ server <- function(input, output, session) {
   # create min summary statistic box
   output$minBox <- renderValueBox({
     if (input$data_type == "Temperature") {
+      if (input$temp_metric == "Fareinheit") {
       valueBox(
-        paste0(stat_data()$min_temp, "°F"), "MIN", icon = icon("fa-light fa-sun"),
+        paste0(stat_data()$min_temp_ft, "°F"), "MIN", icon = icon("fa-light fa-sun"),
         color = "blue"
       )
+      }
+      else{
+        valueBox(
+          paste0(stat_data()$min_temp_cs, "°C"), "MIN", icon = icon("fa-light fa-sun"),
+          color = "blue"
+        )
+      }
     }
     else{
       valueBox(
@@ -379,10 +400,19 @@ server <- function(input, output, session) {
   # create avg summary statistic box
   output$avgBox <- renderValueBox({
     if (input$data_type == "Temperature") {
+      if (input$temp_metric == "Fareinheit") {
       valueBox(
-        paste0(stat_data()$avg_temp, "°F"), "AVG", icon = icon("fa-light fa-sun"),
+        paste0(stat_data()$avg_temp_ft, "°F"), "AVG", icon = icon("fa-light fa-sun"),
         color = "green"
       )
+      }
+      else
+      {
+        valueBox(
+          paste0(stat_data()$avg_temp_cs, "°C"), "AVG", icon = icon("fa-light fa-sun"),
+          color = "green"
+        )
+      }
     }
     else{
       valueBox(
