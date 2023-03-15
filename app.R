@@ -123,7 +123,11 @@ ui <- dashboardPage(
               "month",
               "Select a month:",
               choices = unique(weather_bar$month)
-            )
+            ),
+            radioButtons(
+              "temp_unit", 
+              "Temperature unit:",
+              choices = c("Celsius", "Fahrenheit"), selected = "Celsius")
           ),
           column(
             width = 9,
@@ -288,9 +292,11 @@ server <- function(input, output, session) {
   bar_data <- reactive({
     weather_bar %>% filter(state == input$statename &
                              high_or_low == input$highlow &
-                             month == input$month) %>%
+                             month == input$month ) %>%
       group_by(city) %>% summarize(
-        avg_temp = mean(temp_f, na.rm = TRUE),
+        avg_temp = ifelse(input$temp_unit == "Celsius",
+                          mean((temp_f - 32) * 5/9, na.rm = TRUE),
+                          mean(temp_f, na.rm = TRUE)),
         avg_rain = mean(precip, na.rm = TRUE)
       )
   })
@@ -299,10 +305,16 @@ server <- function(input, output, session) {
   
   # Create bar chart of cities by temperature
   output$temp_barplot <- renderPlot({
+
+    t_unit <- ifelse(input$temp_unit == "Celsius", "°C", "°F")
+    
     ggplot(bar_data(), aes(x = avg_temp, y = reorder(city, avg_temp),fill= avg_temp)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="yellow", high="red") +
+      geom_text(aes(label = paste0(sprintf("%.2f", avg_temp), t_unit)) ,
+                hjust = -0.1, size = 3, color = "black") +
       labs(
-        x = "Average Temperature",
+        x = ifelse(input$temp_unit == "Celsius","Average Temperature (C)",
+                   "Average Temperature (F)"),
         y = "City",
         title = paste0(
           "Cities in ",
@@ -312,7 +324,8 @@ server <- function(input, output, session) {
           "est temperature in ",
           input$month
         )
-      ) 
+      ) +
+      guides(fill = FALSE) 
   })
   
   
@@ -320,6 +333,7 @@ server <- function(input, output, session) {
   output$rain_barplot <- renderPlot({
     ggplot(bar_data(), aes(x = avg_rain, y = reorder(city, avg_rain), fill = avg_rain)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="lightblue", high="darkblue") +
+      geom_text(aes(label = sprintf("%.5f", avg_rain)), hjust = -0.1, size = 3, color = "black") +
       labs(
         x = "Average Precipitation",
         y = "City",
@@ -329,7 +343,8 @@ server <- function(input, output, session) {
           " by average precipitation in ",
           input$month
         )
-      )
+      )+
+      guides(fill = FALSE)
   })
   
   # --------------------------------------summary statistics box start here------------------------------------
