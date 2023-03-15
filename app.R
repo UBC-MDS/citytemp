@@ -40,7 +40,10 @@ ui <- dashboardPage(
   dashboardBody(
     
     # add spinner
-    shinybusy::add_busy_spinner(spin = "fading-circle", margins = c(0, 8), color = "#FFF"),
+    shinybusy::add_busy_spinner(spin = "fading-circle",
+                                position = c("full-page"),
+                                margins = c(0, 15), 
+                                color = "#BCD2E8"),
     
     tabItems(
       tabItem(
