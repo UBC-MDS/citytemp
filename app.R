@@ -256,30 +256,48 @@ server <- function(input, output, session) {
   
   
   # Create line plot based on filtered data and user data type input
+
+  
   output$line_plot <- renderPlot({
     if (input$data_type == "Temperature") {
       ggplot(line_data(),
              aes(x = month, y = temp_f, col = high_or_low)) +
         geom_point() +
-        geom_line() +
+        geom_line(size = 1) +
         theme_classic() +
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
         labs(x = "Month", y = "Temperature (°F)", color = "High/Low") +
         ggtitle(paste("Temperature Distribution for", input$city, ",", input$state)) +
-        theme(plot.title = element_text(size=20, face="bold", family="Palatino", hjust = 0.5))
-
+        theme(
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          panel.background = element_rect(fill = "transparent",colour = NA),
+          plot.background = element_rect(fill = "transparent",colour = NA),
+          axis.text = element_text(size=12, face="bold", family="AvantGarde"),
+          axis.title = element_text(size=12, face="bold", family="AvantGarde"),
+          plot.title = element_text(size=20, face="bold", family="AvantGarde", hjust = 0.5),
+          legend.text=element_text(size=12, face="bold", family="AvantGarde"), 
+          legend.title=element_blank()) 
     }
     else{
       ggplot(line_data(), aes(x = month, y = precip)) +
         geom_point(color = "violetred") +
-        geom_line(color = "lightblue") +
+        geom_line(color = "lightblue", size = 1) +
         theme_classic() +
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
         labs(x = "Month", y = "Precipitation") +
         ggtitle(paste("Precipitation Distribution for", input$city, ",", input$state)) +
-        theme(plot.title = element_text(size=20, face="bold", family="Palatino", hjust = 0.5))
-    }
-  })
+        theme(
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          panel.background = element_rect(fill = "transparent",colour = NA),
+          plot.background = element_rect(fill = "transparent",colour = NA),
+          axis.text = element_text(size=12, face="bold", family="AvantGarde"),
+          axis.title = element_text(size=12, face="bold", family="AvantGarde"),
+          plot.title = element_text(size=20, face="bold", family="AvantGarde", hjust = 0.5), 
+          legend.text=element_text(size=12, face="bold", family="AvantGarde"))
+      }
+  }, bg="transparent" )
   
   
   
@@ -298,74 +316,78 @@ server <- function(input, output, session) {
         avg_rain = mean(precip, na.rm = TRUE)
       )
   })
-  
-  
-  
+
   # Create bar chart of cities by temperature
   
-  
-  
-  
-  
   output$temp_barplot <- renderPlot({
-
     t_unit <- ifelse(input$temp_unit == "Celsius", "°C", "°F")
-    
     num_bars <- nrow(bar_data())
-    
     bartext_size <- 6 - log10(num_bars)
-    
     label_size <- 15 - log10(num_bars)
-    
     ggplot(bar_data(), aes(x = avg_temp, y = reorder(city, avg_temp),fill= avg_temp)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="yellow", high="red") +
       geom_text(aes(label = paste0(sprintf("%.2f", avg_temp), t_unit)) ,
                 hjust = -0.1, size = bartext_size, color = "black") +
       labs(
-        x = (ifelse(input$temp_unit == "Celsius","Average Temperature (C)",
-                   "Average Temperature (F)")),
+        x = (ifelse(input$temp_unit == "Celsius","Average Temperature (°C)",
+                   "Average Temperature (°F)")),
         y = "City",
         title = paste0(
           "Cities in ",
           input$statename,
-          " by average ",
+          " by Average ",
           input$highlow,
-          "est temperature in ",
+          "est Temperature in ",
           input$month
         )
       ) +
       guides(fill = FALSE) +
-      theme(axis.text.y = element_text(size = label_size))
-  })
-  
+      theme(
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        plot.background = element_rect(fill = "transparent",colour = NA),
+        axis.title.x = element_text(size=12, face="bold", family="AvantGarde"),
+        axis.title.y = element_blank(),
+        plot.title = element_text(size=20, face="bold", family="AvantGarde", hjust = 0.5),
+        axis.text.y = element_text(size = label_size, face="bold", family="AvantGarde"),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank(),
+      ) 
+  },  bg="transparent")
   
   # Create bar chart of cities by precipitation
   output$rain_barplot <- renderPlot({
-    
-    
     num_bars <- nrow(bar_data())
-    
     bartext_size <- 6 - log10(num_bars)
-    
     label_size <- 15 - log10(num_bars)
-    
-    
     ggplot(bar_data(), aes(x = avg_rain, y = reorder(city, avg_rain), fill = avg_rain)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="lightblue", high="darkblue") +
-      geom_text(aes(label = sprintf("%.5f", avg_rain)), hjust = -0.1,  size = bartext_size, color = "black") +
+      geom_text(aes(label = sprintf("%.5f", avg_rain)), hjust = -0.1,  size = bartext_size, color = "black", family="AvantGarde") +
       labs(
         x = "Average Precipitation (inch)",
         y = "City",
         title = paste0(
           "Cities in ",
           input$statename,
-          " by average precipitation in ",
+          " by Average Precipitation in ",
           input$month
         )
       )+
       guides(fill = FALSE)+
-      theme(axis.text.y = element_text(size = label_size))
-  })
+      theme(
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        plot.background = element_rect(fill = "transparent",colour = NA),
+        axis.title.x = element_text(size=12, face="bold", family="AvantGarde"),
+        axis.title.y = element_blank(),
+        plot.title = element_text(size=20, face="bold", family="AvantGarde", hjust = 0.5),
+        axis.text.y = element_text(size = label_size, face="bold", family="AvantGarde"),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank(),
+      ) 
+  },  bg="transparent")
   
   # --------------------------------------summary statistics box start here------------------------------------
   
