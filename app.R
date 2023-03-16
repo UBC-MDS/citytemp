@@ -266,7 +266,12 @@ server <- function(input, output, session) {
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
         labs(x = "Month", y = "Temperature (°F)", color = "High/Low") +
         ggtitle(paste("Temperature Distribution for", input$city, ",", input$state)) +
-        theme(plot.title = element_text(size=20, face="bold", family="Palatino", hjust = 0.5))
+        theme(
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          panel.background = element_rect(fill = "transparent",colour = NA),
+          plot.background = element_rect(fill = "transparent",colour = NA),
+          plot.title = element_text(size=20, face="bold", family="Palatino", hjust = 0.5))
 
     }
     else{
@@ -277,9 +282,14 @@ server <- function(input, output, session) {
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
         labs(x = "Month", y = "Precipitation") +
         ggtitle(paste("Precipitation Distribution for", input$city, ",", input$state)) +
-        theme(plot.title = element_text(size=20, face="bold", family="Palatino", hjust = 0.5))
+        theme(
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          panel.background = element_rect(fill = "transparent",colour = NA),
+          plot.background = element_rect(fill = "transparent",colour = NA),
+          plot.title = element_text(size=20, face="bold", family="Palatino", hjust = 0.5))
     }
-  })
+  }, bg="transparent" )
   
   
   
@@ -298,25 +308,14 @@ server <- function(input, output, session) {
         avg_rain = mean(precip, na.rm = TRUE)
       )
   })
-  
-  
-  
+
   # Create bar chart of cities by temperature
   
-  
-  
-  
-  
   output$temp_barplot <- renderPlot({
-
     t_unit <- ifelse(input$temp_unit == "Celsius", "°C", "°F")
-    
     num_bars <- nrow(bar_data())
-    
     bartext_size <- 6 - log10(num_bars)
-    
     label_size <- 15 - log10(num_bars)
-    
     ggplot(bar_data(), aes(x = avg_temp, y = reorder(city, avg_temp),fill= avg_temp)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="yellow", high="red") +
       geom_text(aes(label = paste0(sprintf("%.2f", avg_temp), t_unit)) ,
@@ -335,21 +334,19 @@ server <- function(input, output, session) {
         )
       ) +
       guides(fill = FALSE) +
-      theme(axis.text.y = element_text(size = label_size))
-  })
-  
+      theme(
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        plot.background = element_rect(fill = "transparent",colour = NA),
+        axis.text.y = element_text(size = label_size))
+  },  bg="transparent")
   
   # Create bar chart of cities by precipitation
   output$rain_barplot <- renderPlot({
-    
-    
     num_bars <- nrow(bar_data())
-    
     bartext_size <- 6 - log10(num_bars)
-    
     label_size <- 15 - log10(num_bars)
-    
-    
     ggplot(bar_data(), aes(x = avg_rain, y = reorder(city, avg_rain), fill = avg_rain)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="lightblue", high="darkblue") +
       geom_text(aes(label = sprintf("%.5f", avg_rain)), hjust = -0.1,  size = bartext_size, color = "black") +
@@ -364,8 +361,13 @@ server <- function(input, output, session) {
         )
       )+
       guides(fill = FALSE)+
-      theme(axis.text.y = element_text(size = label_size))
-  })
+      theme(
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        plot.background = element_rect(fill = "transparent",colour = NA),
+        axis.text.y = element_text(size = label_size))
+  },  bg="transparent")
   
   # --------------------------------------summary statistics box start here------------------------------------
   
