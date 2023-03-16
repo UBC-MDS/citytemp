@@ -128,9 +128,13 @@ ui <- dashboardPage(
           column(
             width = 9,
             shinycssloaders::withSpinner(
-            plotOutput("temp_barplot")),
+            plotOutput("temp_barplot",
+                       height = "370px",
+                       width = "100%")),
             shinycssloaders::withSpinner(
-            plotOutput("rain_barplot"))
+            plotOutput("rain_barplot",
+                       height = "370px",
+                       width = "100%"))
           )
         )
       )
@@ -309,9 +313,9 @@ server <- function(input, output, session) {
     
     num_bars <- nrow(bar_data())
     
-    bartext_size <- 5 - log10(num_bars)
+    bartext_size <- 6 - log10(num_bars)
     
-    label_size <- 18 - log10(num_bars)
+    label_size <- 15 - log10(num_bars)
     
     ggplot(bar_data(), aes(x = avg_temp, y = reorder(city, avg_temp),fill= avg_temp)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="yellow", high="red") +
@@ -341,9 +345,9 @@ server <- function(input, output, session) {
     
     num_bars <- nrow(bar_data())
     
-    bartext_size <- 5 - log10(num_bars)
+    bartext_size <- 6 - log10(num_bars)
     
-    label_size <- 18 - log10(num_bars)
+    label_size <- 15 - log10(num_bars)
     
     
     ggplot(bar_data(), aes(x = avg_rain, y = reorder(city, avg_rain), fill = avg_rain)) +
