@@ -7,7 +7,7 @@ library(geosphere)
 library(leaflet.extras)
 library(sf)
 library(shinydashboard)
-library(shinybusy)
+library(shinycssloaders)
 
 weather <- read.csv("data/processed/weather_pro.csv")
 cities <- read.csv("data/processed/cities.csv")
@@ -38,13 +38,6 @@ ui <- dashboardPage(
   ),
   
   dashboardBody(
-    
-    # add spinner
-    shinybusy::add_busy_spinner(spin = "fading-circle",
-                                position = c("full-page"),
-                                margins = c(0, 15), 
-                                color = "#BCD2E8"),
-    
     tabItems(
       tabItem(
         tabName = "temp_precip_trends",
@@ -95,10 +88,13 @@ ui <- dashboardPage(
               valueBoxOutput("minBox")
             ),
             # Add main panel with plot output
-            leafletOutput("map"),
+            shinycssloaders::withSpinner(
+              leafletOutput("map")
+            ),
+            shinycssloaders::withSpinner(
             plotOutput("line_plot",
                        height = "200px",
-                       width = "100%")
+                       width = "100%"))
             
           )
         )
@@ -131,8 +127,10 @@ ui <- dashboardPage(
           ),
           column(
             width = 9,
-            plotOutput("temp_barplot"),
-            plotOutput("rain_barplot")
+            shinycssloaders::withSpinner(
+            plotOutput("temp_barplot")),
+            shinycssloaders::withSpinner(
+            plotOutput("rain_barplot"))
           )
         )
       )
@@ -142,10 +140,6 @@ ui <- dashboardPage(
 
 # Define server logic
 server <- function(input, output, session) {
-  
-  # spinner
-  show_spinner() 
-  hide_spinner()
   
   
   # Update city and state input based on map clicks

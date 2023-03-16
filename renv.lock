@@ -4,7 +4,7 @@
     "Repositories": [
       {
         "Name": "CRAN",
-        "URL": "https://cran.rstudio.com"
+        "URL": "https://cloud.r-project.org"
       }
     ]
   },
@@ -858,16 +858,15 @@
         "xtable"
       ]
     },
-    "shinybusy": {
-      "Package": "shinybusy",
-      "Version": "0.3.1",
+    "shinycssloaders": {
+      "Package": "shinycssloaders",
+      "Version": "1.0.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "cf0b9330f677599316a4b36682081e8b",
+      "Hash": "f39bb3c44a9b496723ec7e86f9a771d8",
       "Requirements": [
-        "htmltools",
-        "htmlwidgets",
-        "jsonlite",
+        "digest",
+        "glue",
         "shiny"
       ]
     },
