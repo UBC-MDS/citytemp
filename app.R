@@ -164,22 +164,13 @@ server <- function(input, output, session) {
 
   # --------------------------------------Map plot start here------------------------------------
   
-  map_data <- reactive({
-    weather %>% filter(city == input$city ) %>%
-      filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
-      group_by(city) %>% 
-      summarize(
-        avg_temp = round(mean(temp_f, na.rm =TRUE), 2),
-        avg_prec = round(mean(precip, na.rm =TRUE), 2),
-      )
-  })
-  
   map_data_color <- reactive({
-    weather %>% 
+    weather %>%
       filter(month >= input$month_range[1], month <= input$month_range[length(input$month_range)]) %>%
-      group_by(city) %>% 
+      group_by(city) %>%
       summarize(
-        avg_temp = round(mean(temp_f, na.rm =TRUE), 2),
+        avg_temp_ft = round(mean(temp_f, na.rm =TRUE), 2),
+        avg_temp_cs = round(mean(temp_c, na.rm =TRUE), 2),
         avg_prec = round(mean(precip, na.rm =TRUE), 2),
       )
   })
@@ -209,33 +200,50 @@ server <- function(input, output, session) {
         label = cities$city,
         color = 
           if (input$data_type == "Temperature") {
-            if_else(map_data_color()$avg_temp <= 40, "#FEF001", 
-                    if_else(map_data_color()$avg_temp <= 60, "#FD9A01", 
-                            if_else(map_data_color()$avg_temp <= 80, "#FD6104", "#F00505")))
+            if (input$temp_metric == "Fareinheit") {
+              if_else(map_data_color()$avg_temp_ft <= 40, "#FEF001", 
+                      if_else(map_data_color()$avg_temp_ft <= 60, "#FD9A01", 
+                              if_else(map_data_color()$avg_temp_ft <= 80, "#FD6104", "#F00505")))
+            }
+            else{
+              {
+                if_else(map_data_color()$avg_temp_cs <= 4, "#FEF001", 
+                        if_else(map_data_color()$avg_temp_cs <= 15, "#FD9A01", 
+                                if_else(map_data_color()$avg_temp_cs <= 27, "#FD6104", "#F00505")))
+              }
+            }
           }
-        else{
+        else {
           if_else(map_data_color()$avg_prec <= 0.05, "#BCD2E8", 
                   if_else(map_data_color()$avg_prec <= 0.15, "#73A5C6", 
                           if_else(map_data_color()$avg_prec <= 0.25, "#2E5984", "#1E3F66")))
-        }
-        ,
+        },
         radius = 5,
         stroke = FALSE,
         fillOpacity = 0.5
       ) %>%
       addLegend(title =
-                  if (input$data_type == "Temperature"){
-                    "Average Temperature (°F)"}
+                  if (input$data_type == "Temperature") {
+                    if (input$temp_metric == "Fareinheit") {
+                      "Average Temperature (°F)"}
+                    else {
+                      "Average Temperature (°C)"
+                    }
+                  }
                 else{"Average Precipitation (inches)"}
                 ,
                 colors =
-                  if (input$data_type == "Temperature"){
+                  if (input$data_type == "Temperature") {
                     c("#FEF001", "#FD9A01", "#FD6104", "#F00505")}
-                else{c("#BCD2E8", "#73A5C6", "#2E5984", "#1E3F66")},
+                else{c("#BCD2E8", "#73A5C6", "#2E5984", "#1E3F66")}
+                ,
                 labels = 
                   if (input$data_type == "Temperature"){
-                    c("< 40", "40 - 60", "60 - 80", "80 <")}
-                else{c("< 0.05", "0.05 - 0.15", "0.15 - 0.25", "0.25 <")}
+                    if (input$temp_metric == "Fareinheit") {
+                      c("< 40", "40 - 60", "60 - 80", "80 <")}
+                    else {
+                      c("< 4", "4 - 15", "15 - 27", "27 <")}}
+                else {c("< 0.05", "0.05 - 0.15", "0.15 - 0.25", "0.25 <")}
       ) %>%
       setView(-100, 40, zoom = 3)
   })
@@ -250,16 +258,17 @@ server <- function(input, output, session) {
       group_by(month, high_or_low) %>%
       summarise(
         temp_f = mean(temp_f, na.rm = TRUE),
+        temp_c = mean(temp_c, na.rm = TRUE),
         precip = mean(precip, na.rm = TRUE)
       )
   })
-  
-  
+
   # Create line plot based on filtered data and user data type input
 
   
   output$line_plot <- renderPlot({
     if (input$data_type == "Temperature") {
+      if (input$temp_metric == "Fareinheit") {
       ggplot(line_data(),
              aes(x = month, y = temp_f, col = high_or_low)) +
         geom_point() +
@@ -279,6 +288,26 @@ server <- function(input, output, session) {
           legend.text=element_text(size=12, face="bold", family="AvantGarde"), 
           legend.title=element_blank()) 
     }
+    else {
+      ggplot(line_data(),
+             aes(x = month, y = temp_c, col = high_or_low)) +
+        geom_point() +
+        geom_line(size = 1) +
+        theme_classic() +
+        scale_x_continuous(breaks = seq(1, 12, by = 1)) +
+        labs(x = "Month", y = "Temperature (°C)", color = "High/Low") +
+        ggtitle(paste("Temperature Distribution for", input$city, ",", input$state)) +
+        theme(
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          panel.background = element_rect(fill = "transparent",colour = NA),
+          plot.background = element_rect(fill = "transparent",colour = NA),
+          axis.text = element_text(size=12, face="bold", family="AvantGarde"),
+          axis.title = element_text(size=12, face="bold", family="AvantGarde"),
+          plot.title = element_text(size=20, face="bold", family="AvantGarde", hjust = 0.5),
+          legend.text=element_text(size=12, face="bold", family="AvantGarde"), 
+          legend.title=element_blank()) 
+    }}
     else{
       ggplot(line_data(), aes(x = month, y = precip)) +
         geom_point(color = "violetred") +
