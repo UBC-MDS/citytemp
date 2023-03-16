@@ -258,16 +258,17 @@ server <- function(input, output, session) {
       group_by(month, high_or_low) %>%
       summarise(
         temp_f = mean(temp_f, na.rm = TRUE),
+        temp_c = mean(temp_c, na.rm = TRUE),
         precip = mean(precip, na.rm = TRUE)
       )
   })
-  
-  
+
   # Create line plot based on filtered data and user data type input
 
   
   output$line_plot <- renderPlot({
     if (input$data_type == "Temperature") {
+      if (input$temp_metric == "Fareinheit") {
       ggplot(line_data(),
              aes(x = month, y = temp_f, col = high_or_low)) +
         geom_point() +
@@ -287,6 +288,26 @@ server <- function(input, output, session) {
           legend.text=element_text(size=12, face="bold", family="AvantGarde"), 
           legend.title=element_blank()) 
     }
+    else {
+      ggplot(line_data(),
+             aes(x = month, y = temp_c, col = high_or_low)) +
+        geom_point() +
+        geom_line(size = 1) +
+        theme_classic() +
+        scale_x_continuous(breaks = seq(1, 12, by = 1)) +
+        labs(x = "Month", y = "Temperature (°C)", color = "High/Low") +
+        ggtitle(paste("Temperature Distribution for", input$city, ",", input$state)) +
+        theme(
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          panel.background = element_rect(fill = "transparent",colour = NA),
+          plot.background = element_rect(fill = "transparent",colour = NA),
+          axis.text = element_text(size=12, face="bold", family="AvantGarde"),
+          axis.title = element_text(size=12, face="bold", family="AvantGarde"),
+          plot.title = element_text(size=20, face="bold", family="AvantGarde", hjust = 0.5),
+          legend.text=element_text(size=12, face="bold", family="AvantGarde"), 
+          legend.title=element_blank()) 
+    }}
     else{
       ggplot(line_data(), aes(x = month, y = precip)) +
         geom_point(color = "violetred") +
