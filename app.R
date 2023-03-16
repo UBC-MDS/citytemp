@@ -21,7 +21,7 @@ ui <- dashboardPage(
   
   dashboardHeader(title = "Weather Dashboard"),
   
-  dashboardSidebar(
+  dashboardSidebar(tags$style(".left-side, .main-sidebar { width: 235px }"),
     sidebarMenu(
       id = "tabs",
       menuItem(
