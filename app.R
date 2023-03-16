@@ -363,7 +363,8 @@ server <- function(input, output, session) {
     label_size <- 15 - log10(num_bars)
     ggplot(bar_data(), aes(x = avg_rain, y = reorder(city, avg_rain), fill = avg_rain)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="lightblue", high="darkblue") +
-      geom_text(aes(label = sprintf("%.5f", avg_rain)), hjust = -0.1,  size = bartext_size, color = "black", family="AvantGarde") +
+      geom_text(aes(label = sprintf("%.5f", avg_rain)), 
+                hjust = -0.1,  size = bartext_size, color = "black") +
       labs(
         x = "Average Precipitation (inch)",
         y = "City",
