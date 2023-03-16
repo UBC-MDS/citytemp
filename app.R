@@ -104,7 +104,7 @@ ui <- dashboardPage(
         tabName = "city_ranking",
         fluidRow(
           column(
-            width = 3,
+            width = 2,
             selectInput(
               "statename",
               "Select a state:",
@@ -126,7 +126,7 @@ ui <- dashboardPage(
               choices = c("Celsius", "Fahrenheit"), selected = "Celsius")
           ),
           column(
-            width = 9,
+            width = 10,
             shinycssloaders::withSpinner(
             plotOutput("temp_barplot",
                        height = "370px",
@@ -349,14 +349,14 @@ server <- function(input, output, session) {
   # Create bar chart of cities by temperature
   
   output$temp_barplot <- renderPlot({
-    t_unit <- ifelse(input$temp_unit == "Celsius", "°C", "°F")
+    
     num_bars <- nrow(bar_data())
     bartext_size <- 6 - log10(num_bars)
     label_size <- 15 - log10(num_bars)
     ggplot(bar_data(), aes(x = avg_temp, y = reorder(city, avg_temp),fill= avg_temp)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="yellow", high="red") +
-      geom_text(aes(label = paste0(sprintf("%.2f", avg_temp), t_unit)) ,
-                hjust = -0.1, size = bartext_size, color = "black") +
+      geom_text(aes(label = paste0(sprintf("%.2f", avg_temp))) ,
+                hjust = -0.03, size = bartext_size, color = "black") +
       labs(
         x = (ifelse(input$temp_unit == "Celsius","Average Temperature (°C)",
                    "Average Temperature (°F)")),
@@ -388,12 +388,12 @@ server <- function(input, output, session) {
   # Create bar chart of cities by precipitation
   output$rain_barplot <- renderPlot({
     num_bars <- nrow(bar_data())
-    bartext_size <- 6 - log10(num_bars)
+    bartext_size <- 5 - log10(num_bars)
     label_size <- 15 - log10(num_bars)
     ggplot(bar_data(), aes(x = avg_rain, y = reorder(city, avg_rain), fill = avg_rain)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="lightblue", high="darkblue") +
-      geom_text(aes(label = sprintf("%.5f", avg_rain)), 
-                hjust = -0.1,  size = bartext_size, color = "black") +
+      geom_text(aes(label = sprintf("%.4f", avg_rain)), 
+                hjust = -0.01,  size = bartext_size, color = "black") +
       labs(
         x = "Average Precipitation (inch)",
         y = "City",
