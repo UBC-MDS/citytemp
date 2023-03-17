@@ -74,7 +74,7 @@ ui <- dashboardPage(
             # Add radio button input for selecting temperature metric
             radioButtons(
               "temp_metric",
-              "Select temperature metric:",
+              "Select Temperature metric:",
               choices = c("Celsius", "Fareinheit"),
               selected = "Celsius"
             )
@@ -130,7 +130,7 @@ ui <- dashboardPage(
             ),
             radioButtons(
               "temp_unit", 
-              "Temperature unit:",
+              "Select Temperature metric:",
               choices = c("Celsius", "Fahrenheit"), selected = "Celsius")
           ),
           column(
