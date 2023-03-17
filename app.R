@@ -184,14 +184,14 @@ server <- function(input, output, session) {
      else {paste("Average Precipitation Distribution for", input$city, ",", input$state)}})
    
    output$bar_temptitle <- renderText({
-     if (input$temp_metric == "Fahrenheit") {
+     if (input$temp_unit == "Celsius") {
        ifelse(input$highlow == "high",
-            paste("Cities in", input$state, "by Highest Average Temperature in", input$month, "(°F)"),
-            paste("Cities in", input$state, "by Lowest Average Temperature in", input$month, "(°F)"))}
+            paste("Cities in", input$state, "by Highest Average Temperature in", input$month, "(°C)"),
+            paste("Cities in", input$state, "by Lowest Average Temperature in", input$month, "(°C)"))}
      else {
        ifelse(input$highlow == "high",
-              paste("Cities in", input$state, "by Highest Average Temperature in", input$month, "(°C)"),
-              paste("Cities in", input$state, "by Lowest Average Temperature in", input$month, "(°C)"))}
+              paste("Cities in", input$state, "by Highest Average Temperature in", input$month, "(°F)"),
+              paste("Cities in", input$state, "by Lowest Average Temperature in", input$month, "(°F)"))}
      })
    
    output$bar_prectitle <- renderText({
