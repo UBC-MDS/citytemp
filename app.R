@@ -140,13 +140,24 @@ ui <- dashboardPage(
           ),
           column(
             width = 10,
+            column(width = 12,
+                   tags$h2(class = "text-center", style = "font-size: 17px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
+                           textOutput("bar_temptitle")
+                   )
+            ),
+            tags$hr(),
             shinycssloaders::withSpinner(
             plotOutput("temp_barplot",
-                       height = "370px",
+                       height = "350px",
                        width = "100%")),
+            column(width = 12,
+                   tags$h2(class = "text-center", style = "font-size: 17px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
+                           textOutput("bar_prectitle")
+                   )
+            ),
             shinycssloaders::withSpinner(
             plotOutput("rain_barplot",
-                       height = "370px",
+                       height = "350px",
                        width = "100%"))
           )
         )
@@ -167,7 +178,20 @@ server <- function(input, output, session) {
        paste("Average Temperature Distribution for", input$city, ",", input$state)}
      else {paste("Average Precipitation Distribution for", input$city, ",", input$state)}})
    
-  
+   output$bar_temptitle <- renderText({
+     if (input$temp_metric == "Fahrenheit") {
+       ifelse(input$highlow == "high",
+            paste("Cities in", input$state, "by Highest Average Temperature in", input$month, "(°F)"),
+            paste("Cities in", input$state, "by Lowest Average Temperature in", input$month, "(°F)"))}
+     else {
+       ifelse(input$highlow == "high",
+              paste("Cities in", input$state, "by Highest Average Temperature in", input$month, "(°C)"),
+              paste("Cities in", input$state, "by Lowest Average Temperature in", input$month, "(°C)"))}
+     })
+   
+   output$bar_prectitle <- renderText({
+     paste("Cities in", input$state, "by Average Precipitation in", input$month, "(Inches)")})
+   
   # Update city and state input based on map clicks
   observeEvent(input$map_marker_click, {
     updateSelectInput(session, "city", selected = input$map_marker_click$id)
@@ -378,17 +402,7 @@ server <- function(input, output, session) {
                 hjust = -0.1, size = bartext_size, color = "black", fontface="bold") +
       scale_x_continuous(expand = c(0, 0, 0, 3)) +
       labs(
-        x = (ifelse(input$temp_unit == "Celsius","Average Temperature (°C)",
-                   "Average Temperature (°F)")),
-        y = "City",
-        title = paste0(
-          "Cities in ",
-          input$statename,
-          " by Average ",
-          input$highlow,
-          "est Temperature in ",
-          input$month
-        )
+        y = "City"
       ) +
       guides(fill = FALSE) +
       theme(
@@ -396,7 +410,7 @@ server <- function(input, output, session) {
         panel.grid.minor = element_blank(),
         panel.background = element_rect(fill = "transparent",colour = NA),
         plot.background = element_rect(fill = "transparent",colour = NA),
-        axis.title.x = element_text(size=12, face="bold", family="AvantGarde"),
+        axis.title.x = element_blank(),
         axis.title.y = element_blank(),
         plot.title = element_text(size=20, face="bold", family="AvantGarde", hjust = 0.5),
         axis.text.y = element_text(size = label_size, face="bold", family="AvantGarde"),
@@ -416,14 +430,7 @@ server <- function(input, output, session) {
                 hjust = -0.1,  size = bartext_size, color = "black", fontface="bold") +
       scale_x_continuous(expand = c(0, 0, 0, 0.09)) +
       labs(
-        x = "Average Precipitation (inch)",
-        y = "City",
-        title = paste0(
-          "Cities in ",
-          input$statename,
-          " by Average Precipitation in ",
-          input$month
-        )
+        y = "City"
       )+
       guides(fill = FALSE)+
       theme(
@@ -431,7 +438,7 @@ server <- function(input, output, session) {
         panel.grid.minor = element_blank(),
         panel.background = element_rect(fill = "transparent",colour = NA),
         plot.background = element_rect(fill = "transparent",colour = NA),
-        axis.title.x = element_text(size=12, face="bold", family="AvantGarde"),
+        axis.title.x = element_blank(),
         axis.title.y = element_blank(),
         plot.title = element_text(size=20, face="bold", family="AvantGarde", hjust = 0.5),
         axis.text.y = element_text(size = label_size, face="bold", family="AvantGarde"),
