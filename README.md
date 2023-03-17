@@ -32,7 +32,7 @@ Our dashboard is presents observed temperature and precipitation data from the [
 
 The `citytemp` app contains two tabs: 
 
-In the `City Map with Temp/Rain Trends` tab, users specify the range of months of their interest (eg. 1 to 6 for January to June), the city and state of their interest (eg. TX, Austin), and whether they would like to observe temperature levels or precipitation levels.
+In the `City Map with Temp/Rain Trends` tab, users specify the range of months of their interest (eg. 1 to 6 for January to June), the city and state of their interest (eg. TX, Austin), and whether they would like to observe temperature levels or precipitation levels. Users also have the option to observe temperature levels in degrees Celsius (ºC) or Fahrenheit (ºF).
 
 Based on these user selections, our app presents the following:
 
@@ -40,7 +40,7 @@ Based on these user selections, our app presents the following:
   - A map showing the average temperature or precipitation levels based on the range chosen by the user. City points are coloured from low to high temperature or precipitation levels. 
   - A line plot showing the distribution of low and high observed temperatures and precipitation levels. 
 
-In the `City Ranking by Temp/Rain` tab, users select the US state of their interest, the month they would like to observe data for, and whether they would like to observe high or low temperature/precipitation records. Based on these selections, our app presents bar graphs for the cities ranking in the specified state with the highest or lowest average monthly temperature/precipitation.
+In the `City Ranking by Temp/Rain` tab, users select the US state of their interest, the month they would like to observe data for, and whether they would like to observe high or low temperature/precipitation records. Based on these selections, our app presents bar graphs for the cities in their specified state ranked by highest or lowest average monthly temperature/precipitation.
 
 ## Installation
 
