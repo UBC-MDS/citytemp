@@ -100,7 +100,7 @@ ui <- dashboardPage(
             # Add main panel with plot output
             shinycssloaders::withSpinner(
               leafletOutput("map", 
-                            height = "295px",
+                            height = "285px",
                             width = "100%")
             ),
             column(width = 12,
@@ -153,7 +153,7 @@ ui <- dashboardPage(
             tags$hr(),
             shinycssloaders::withSpinner(
             plotOutput("temp_barplot",
-                       height = "305px",
+                       height = "280px",
                        width = "100%")),
             column(width = 12,
                    tags$h2(class = "text-center", style = "font-size: 17px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
@@ -162,7 +162,7 @@ ui <- dashboardPage(
             ),
             shinycssloaders::withSpinner(
             plotOutput("rain_barplot",
-                       height = "305px",
+                       height = "280px",
                        width = "100%"))
           )
         )
