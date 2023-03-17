@@ -223,15 +223,15 @@ server <- function(input, output, session) {
         color = 
           if (input$data_type == "Temperature") {
             if (input$temp_metric == "Fareinheit") {
-              if_else(map_data_color()$avg_temp_ft <= 40, "#FEF001", 
-                      if_else(map_data_color()$avg_temp_ft <= 60, "#FD9A01", 
-                              if_else(map_data_color()$avg_temp_ft <= 80, "#FD6104", "#F00505")))
+              if_else(map_data_color()$avg_temp_ft <= 40, "#grey", 
+                      if_else(map_data_color()$avg_temp_ft <= 60, "#f57f7f", 
+                              if_else(map_data_color()$avg_temp_ft <= 80, "#f26716", "#fc0000")))
             }
             else{
               {
-                if_else(map_data_color()$avg_temp_cs <= 4, "#FEF001", 
-                        if_else(map_data_color()$avg_temp_cs <= 15, "#FD9A01", 
-                                if_else(map_data_color()$avg_temp_cs <= 27, "#FD6104", "#F00505")))
+                if_else(map_data_color()$avg_temp_cs <= 4, "#grey", 
+                        if_else(map_data_color()$avg_temp_cs <= 15, "#f57f7f", 
+                                if_else(map_data_color()$avg_temp_cs <= 27, "#f26716", "#fc0000")))
               }
             }
           }
@@ -256,7 +256,7 @@ server <- function(input, output, session) {
                 ,
                 colors =
                   if (input$data_type == "Temperature") {
-                    c("#F00505", "#FD6104", "#FD9A01", "#FEF001")}
+                    c("#fc0000", "#f26716", "#f57f7f", "grey")}
                 else{c("#1E3F66", "#2E5984", "#73A5C6", "#BCD2E8")}
                 ,
                 labels = 
@@ -373,7 +373,7 @@ server <- function(input, output, session) {
     bartext_size <- 6 - log10(num_bars)
     label_size <- 15 - log10(num_bars)
     ggplot(bar_data(), aes(x = avg_temp, y = reorder(city, avg_temp),fill= avg_temp)) +
-      geom_bar(stat = "identity") + scale_fill_gradient(low="yellow", high="red") +
+      geom_bar(stat = "identity") + scale_fill_gradient(low="grey", high="red") +
       geom_text(aes(label = paste0(sprintf("%.2f", avg_temp))),
                 hjust = -0.1, size = bartext_size, color = "black", fontface="bold") +
       scale_x_continuous(expand = c(0, 0, 0, 3)) +
