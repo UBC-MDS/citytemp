@@ -82,6 +82,14 @@ ui <- dashboardPage(
           column(
             width = 9,
             # Added a row for summary statistics
+            fluidRow(tags$head(
+              tags$link(rel = "stylesheet", href = "https://fonts.googleapis.com/css2?family=Avant+Garde&display=swap")
+            ),
+            column(width = 12,
+                   tags$h2(class = "text-center", style = "font-size: 20px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
+                           textOutput("summaryTitle")
+                   )
+            )),
             fluidRow(
               valueBoxOutput("avgBox"),
               valueBoxOutput("maxBox"),
@@ -145,6 +153,9 @@ ui <- dashboardPage(
 # Define server logic
 server <- function(input, output, session) {
   
+   output$summaryTitle <- renderText({
+     paste("Summary Statistics for", input$city, ",", input$state)
+  })
   
   # Update city and state input based on map clicks
   observeEvent(input$map_marker_click, {
