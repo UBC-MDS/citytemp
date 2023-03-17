@@ -100,7 +100,7 @@ ui <- dashboardPage(
             # Add main panel with plot output
             shinycssloaders::withSpinner(
               leafletOutput("map", 
-                            height = "300px",
+                            height = "295px",
                             width = "100%")
             ),
             column(width = 12,
@@ -111,7 +111,7 @@ ui <- dashboardPage(
             ),
             shinycssloaders::withSpinner(
             plotOutput("line_plot",
-                       height = "200px",
+                       height = "175px",
                        width = "100%"))
             
           )
@@ -153,7 +153,7 @@ ui <- dashboardPage(
             tags$hr(),
             shinycssloaders::withSpinner(
             plotOutput("temp_barplot",
-                       height = "350px",
+                       height = "305px",
                        width = "100%")),
             column(width = 12,
                    tags$h2(class = "text-center", style = "font-size: 17px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
@@ -162,7 +162,7 @@ ui <- dashboardPage(
             ),
             shinycssloaders::withSpinner(
             plotOutput("rain_barplot",
-                       height = "350px",
+                       height = "305px",
                        width = "100%"))
           )
         )
@@ -400,7 +400,7 @@ server <- function(input, output, session) {
   output$temp_barplot <- renderPlot({
     
     num_bars <- nrow(bar_data())
-    bartext_size <- 6 - log10(num_bars)
+    bartext_size <- 5.5 - log10(num_bars)
     label_size <- 15 - log10(num_bars)
     ggplot(bar_data(), aes(x = avg_temp, y = reorder(city, avg_temp),fill= avg_temp)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="grey", high="red") +
@@ -428,7 +428,7 @@ server <- function(input, output, session) {
   # Create bar chart of cities by precipitation
   output$rain_barplot <- renderPlot({
     num_bars <- nrow(bar_data())
-    bartext_size <- 5 - log10(num_bars)
+    bartext_size <- 5.5 - log10(num_bars)
     label_size <- 15 - log10(num_bars)
     ggplot(bar_data(), aes(x = avg_rain, y = reorder(city, avg_rain), fill = avg_rain)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="lightblue", high="darkblue") +
