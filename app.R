@@ -75,7 +75,7 @@ ui <- dashboardPage(
             radioButtons(
               "temp_metric",
               "Select Temperature metric:",
-              choices = c("Celsius", "Fareinheit"),
+              choices = c("Celsius", "Fahrenheit"),
               selected = "Celsius"
             )
           ),
@@ -222,7 +222,7 @@ server <- function(input, output, session) {
         label = cities$city,
         color = 
           if (input$data_type == "Temperature") {
-            if (input$temp_metric == "Fareinheit") {
+            if (input$temp_metric == "Fahrenheit") {
               if_else(map_data_color()$avg_temp_ft <= 40, "#FEF001", 
                       if_else(map_data_color()$avg_temp_ft <= 60, "#FD9A01", 
                               if_else(map_data_color()$avg_temp_ft <= 80, "#FD6104", "#F00505")))
@@ -246,7 +246,7 @@ server <- function(input, output, session) {
       ) %>%
       addLegend(title =
                   if (input$data_type == "Temperature") {
-                    if (input$temp_metric == "Fareinheit") {
+                    if (input$temp_metric == "Fahrenheit") {
                       "Heatmap for Average Temperature"}
                     else {
                       "Heatmap for Average Temperature"
@@ -261,7 +261,7 @@ server <- function(input, output, session) {
                 ,
                 labels = 
                   if (input$data_type == "Temperature"){
-                    if (input$temp_metric == "Fareinheit") {
+                    if (input$temp_metric == "Fahrenheit") {
                       c("80°F or higher", "60°F - 80°F",  "40°F - 60°F", "40°F or less")}
                     else {
                       c("27°C or higher", "15°C - 27°C", "4°C - 15°C", "4°C or less")}}
@@ -291,7 +291,7 @@ server <- function(input, output, session) {
   
   output$line_plot <- renderPlot({
     if (input$data_type == "Temperature") {
-      if (input$temp_metric == "Fareinheit") {
+      if (input$temp_metric == "Fahrenheit") {
       ggplot(line_data(), aes(x = month, y = temp_f, col = high_or_low)) +
         geom_point() +
         geom_line(size = 1) +
@@ -463,7 +463,7 @@ server <- function(input, output, session) {
   # create max summary statistic box
   output$maxBox <- renderValueBox({
     if (input$data_type == "Temperature") {
-      if (input$temp_metric == "Fareinheit") {
+      if (input$temp_metric == "Fahrenheit") {
         valueBox(
           paste0(stat_data()$max_temp_ft, "°F"), "MAX", icon = icon("fa-light fa-sun"),
           color = "red")
@@ -488,7 +488,7 @@ server <- function(input, output, session) {
   # create min summary statistic box
   output$minBox <- renderValueBox({
     if (input$data_type == "Temperature") {
-      if (input$temp_metric == "Fareinheit") {
+      if (input$temp_metric == "Fahrenheit") {
       valueBox(
         paste0(stat_data()$min_temp_ft, "°F"), "MIN", icon = icon("fa-light fa-sun"),
         color = "blue"
@@ -511,7 +511,7 @@ server <- function(input, output, session) {
   # create avg summary statistic box
   output$avgBox <- renderValueBox({
     if (input$data_type == "Temperature") {
-      if (input$temp_metric == "Fareinheit") {
+      if (input$temp_metric == "Fahrenheit") {
       valueBox(
         paste0(stat_data()$avg_temp_ft, "°F"), "AVG", icon = icon("fa-light fa-sun"),
         color = "green"
