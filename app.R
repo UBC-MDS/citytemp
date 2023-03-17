@@ -321,7 +321,7 @@ server <- function(input, output, session) {
         geom_line(size = 1) +
         theme_classic() +
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
-        labs(x = "Month", y = "Temperature (°F)", color = "High/Low") 
+        labs(x = "Month", y = "Temperature (°F)", color = "High/Low") +
         theme(
           panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(),
