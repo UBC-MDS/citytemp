@@ -82,8 +82,10 @@ ui <- dashboardPage(
           column(
             width = 9,
             # Added a row for summary statistics
-            fluidRow(tags$head(
-              tags$link(rel = "stylesheet", href = "https://fonts.googleapis.com/css2?family=Avant+Garde&display=swap")
+            fluidRow(
+              tags$head(
+              tags$link(
+                rel = "stylesheet", href = "https://fonts.googleapis.com/css2?family=Avant+Garde&display=swap")
             ),
             column(width = 12,
                    tags$h2(class = "text-center", style = "font-size: 20px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
@@ -97,10 +99,13 @@ ui <- dashboardPage(
             ),
             # Add main panel with plot output
             shinycssloaders::withSpinner(
-              leafletOutput("map")
+              leafletOutput("map", 
+                            height = "300px",
+                            width = "100%")
             ),
             column(width = 12,
-                   tags$h2(class = "text-center", style = "font-size: 20px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
+                   tags$h2(class = "text-center", 
+                           style = "font-size: 20px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
                            textOutput("linetitle")
                    )
             ),
@@ -136,7 +141,7 @@ ui <- dashboardPage(
             radioButtons(
               "temp_unit", 
               "Select Temperature metric:",
-              choices = c("Celsius", "Fahrenheit"), selected = "Celsius")
+              choices = c("Celsius", "Fareinheit"), selected = "Celsius")
           ),
           column(
             width = 10,
@@ -253,9 +258,9 @@ server <- function(input, output, session) {
             }
             else{
               {
-                if_else(map_data_color()$avg_temp_cs <= 4, "#FEF001", 
-                        if_else(map_data_color()$avg_temp_cs <= 15, "#FD9A01", 
-                                if_else(map_data_color()$avg_temp_cs <= 27, "#FD6104", "#F00505")))
+                if_else(map_data_color()$avg_temp_cs <= 4, "#grey", 
+                        if_else(map_data_color()$avg_temp_cs <= 15, "#f57f7f", 
+                                if_else(map_data_color()$avg_temp_cs <= 27, "#f26716", "#fc0000")))
               }
             }
           }
@@ -280,7 +285,7 @@ server <- function(input, output, session) {
                 ,
                 colors =
                   if (input$data_type == "Temperature") {
-                    c("#F00505", "#FD6104", "#FD9A01", "#FEF001")}
+                    c("#fc0000", "#f26716", "#f57f7f", "grey")}
                 else{c("#1E3F66", "#2E5984", "#73A5C6", "#BCD2E8")}
                 ,
                 labels = 
@@ -351,7 +356,8 @@ server <- function(input, output, session) {
           plot.title = element_text(size=20, face="bold", family="AvantGarde", hjust = 0.5),
           legend.text=element_text(size=12, face="bold", family="AvantGarde"), 
           legend.title=element_blank()) 
-    }}
+    }
+      }
     else{
       ggplot(line_data(), aes(x = month, y = precip)) +
         geom_point(color = "violetred") +
@@ -397,7 +403,7 @@ server <- function(input, output, session) {
     bartext_size <- 6 - log10(num_bars)
     label_size <- 15 - log10(num_bars)
     ggplot(bar_data(), aes(x = avg_temp, y = reorder(city, avg_temp),fill= avg_temp)) +
-      geom_bar(stat = "identity") + scale_fill_gradient(low="yellow", high="red") +
+      geom_bar(stat = "identity") + scale_fill_gradient(low="grey", high="red") +
       geom_text(aes(label = paste0(sprintf("%.2f", avg_temp))),
                 hjust = -0.1, size = bartext_size, color = "black", fontface="bold") +
       scale_x_continuous(expand = c(0, 0, 0, 3)) +
