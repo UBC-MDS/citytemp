@@ -141,7 +141,7 @@ ui <- dashboardPage(
             radioButtons(
               "temp_unit", 
               "Select Temperature metric:",
-              choices = c("Celsius", "Fareinheit"), selected = "Celsius")
+              choices = c("Celsius", "Fahrenheit"), selected = "Celsius")
           ),
           column(
             width = 10,
