@@ -75,7 +75,7 @@ ui <- dashboardPage(
             radioButtons(
               "temp_metric",
               "Select Temperature metric:",
-              choices = c("Celsius", "Fareinheit"),
+              choices = c("Celsius", "Fahrenheit"),
               selected = "Celsius"
             )
           ),
@@ -145,13 +145,24 @@ ui <- dashboardPage(
           ),
           column(
             width = 10,
+            column(width = 12,
+                   tags$h2(class = "text-center", style = "font-size: 17px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
+                           textOutput("bar_temptitle")
+                   )
+            ),
+            tags$hr(),
             shinycssloaders::withSpinner(
             plotOutput("temp_barplot",
-                       height = "370px",
+                       height = "350px",
                        width = "100%")),
+            column(width = 12,
+                   tags$h2(class = "text-center", style = "font-size: 17px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
+                           textOutput("bar_prectitle")
+                   )
+            ),
             shinycssloaders::withSpinner(
             plotOutput("rain_barplot",
-                       height = "370px",
+                       height = "350px",
                        width = "100%"))
           )
         )
@@ -172,7 +183,20 @@ server <- function(input, output, session) {
        paste("Average Temperature Distribution for", input$city, ",", input$state)}
      else {paste("Average Precipitation Distribution for", input$city, ",", input$state)}})
    
-  
+   output$bar_temptitle <- renderText({
+     if (input$temp_metric == "Fahrenheit") {
+       ifelse(input$highlow == "high",
+            paste("Cities in", input$state, "by Highest Average Temperature in", input$month, "(°F)"),
+            paste("Cities in", input$state, "by Lowest Average Temperature in", input$month, "(°F)"))}
+     else {
+       ifelse(input$highlow == "high",
+              paste("Cities in", input$state, "by Highest Average Temperature in", input$month, "(°C)"),
+              paste("Cities in", input$state, "by Lowest Average Temperature in", input$month, "(°C)"))}
+     })
+   
+   output$bar_prectitle <- renderText({
+     paste("Cities in", input$state, "by Average Precipitation in", input$month, "(Inches)")})
+   
   # Update city and state input based on map clicks
   observeEvent(input$map_marker_click, {
     updateSelectInput(session, "city", selected = input$map_marker_click$id)
@@ -227,10 +251,10 @@ server <- function(input, output, session) {
         label = cities$city,
         color = 
           if (input$data_type == "Temperature") {
-            if (input$temp_metric == "Fareinheit") {
-              if_else(map_data_color()$avg_temp_ft <= 40, "#grey", 
-                      if_else(map_data_color()$avg_temp_ft <= 60, "#f57f7f", 
-                              if_else(map_data_color()$avg_temp_ft <= 80, "#f26716", "#fc0000")))
+            if (input$temp_metric == "Fahrenheit") {
+              if_else(map_data_color()$avg_temp_ft <= 40, "#FEF001", 
+                      if_else(map_data_color()$avg_temp_ft <= 60, "#FD9A01", 
+                              if_else(map_data_color()$avg_temp_ft <= 80, "#FD6104", "#F00505")))
             }
             else{
               {
@@ -251,7 +275,7 @@ server <- function(input, output, session) {
       ) %>%
       addLegend(title =
                   if (input$data_type == "Temperature") {
-                    if (input$temp_metric == "Fareinheit") {
+                    if (input$temp_metric == "Fahrenheit") {
                       "Heatmap for Average Temperature"}
                     else {
                       "Heatmap for Average Temperature"
@@ -266,7 +290,7 @@ server <- function(input, output, session) {
                 ,
                 labels = 
                   if (input$data_type == "Temperature"){
-                    if (input$temp_metric == "Fareinheit") {
+                    if (input$temp_metric == "Fahrenheit") {
                       c("80°F or higher", "60°F - 80°F",  "40°F - 60°F", "40°F or less")}
                     else {
                       c("27°C or higher", "15°C - 27°C", "4°C - 15°C", "4°C or less")}}
@@ -295,11 +319,9 @@ server <- function(input, output, session) {
 
   
   output$line_plot <- renderPlot({
-    if (input$data_type == "Temperature") 
-      {
-      if (input$temp_metric == "Fareinheit") {
-      ggplot(line_data(), 
-             aes(x = month, y = temp_f, col = high_or_low)) +
+    if (input$data_type == "Temperature") {
+      if (input$temp_metric == "Fahrenheit") {
+      ggplot(line_data(), aes(x = month, y = temp_f, col = high_or_low)) +
         geom_point() +
         geom_line(size = 1) +
         theme_classic() +
@@ -386,17 +408,7 @@ server <- function(input, output, session) {
                 hjust = -0.1, size = bartext_size, color = "black", fontface="bold") +
       scale_x_continuous(expand = c(0, 0, 0, 3)) +
       labs(
-        x = (ifelse(input$temp_unit == "Celsius","Average Temperature (°C)",
-                   "Average Temperature (°F)")),
-        y = "City",
-        title = paste0(
-          "Cities in ",
-          input$statename,
-          " by Average ",
-          input$highlow,
-          "est Temperature in ",
-          input$month
-        )
+        y = "City"
       ) +
       guides(fill = FALSE) +
       theme(
@@ -404,7 +416,7 @@ server <- function(input, output, session) {
         panel.grid.minor = element_blank(),
         panel.background = element_rect(fill = "transparent",colour = NA),
         plot.background = element_rect(fill = "transparent",colour = NA),
-        axis.title.x = element_text(size=12, face="bold", family="AvantGarde"),
+        axis.title.x = element_blank(),
         axis.title.y = element_blank(),
         plot.title = element_text(size=20, face="bold", family="AvantGarde", hjust = 0.5),
         axis.text.y = element_text(size = label_size, face="bold", family="AvantGarde"),
@@ -424,14 +436,7 @@ server <- function(input, output, session) {
                 hjust = -0.1,  size = bartext_size, color = "black", fontface="bold") +
       scale_x_continuous(expand = c(0, 0, 0, 0.09)) +
       labs(
-        x = "Average Precipitation (inch)",
-        y = "City",
-        title = paste0(
-          "Cities in ",
-          input$statename,
-          " by Average Precipitation in ",
-          input$month
-        )
+        y = "City"
       )+
       guides(fill = FALSE)+
       theme(
@@ -439,7 +444,7 @@ server <- function(input, output, session) {
         panel.grid.minor = element_blank(),
         panel.background = element_rect(fill = "transparent",colour = NA),
         plot.background = element_rect(fill = "transparent",colour = NA),
-        axis.title.x = element_text(size=12, face="bold", family="AvantGarde"),
+        axis.title.x = element_blank(),
         axis.title.y = element_blank(),
         plot.title = element_text(size=20, face="bold", family="AvantGarde", hjust = 0.5),
         axis.text.y = element_text(size = label_size, face="bold", family="AvantGarde"),
@@ -471,7 +476,7 @@ server <- function(input, output, session) {
   # create max summary statistic box
   output$maxBox <- renderValueBox({
     if (input$data_type == "Temperature") {
-      if (input$temp_metric == "Fareinheit") {
+      if (input$temp_metric == "Fahrenheit") {
         valueBox(
           paste0(stat_data()$max_temp_ft, "°F"), "MAX", icon = icon("fa-light fa-sun"),
           color = "red")
@@ -496,7 +501,7 @@ server <- function(input, output, session) {
   # create min summary statistic box
   output$minBox <- renderValueBox({
     if (input$data_type == "Temperature") {
-      if (input$temp_metric == "Fareinheit") {
+      if (input$temp_metric == "Fahrenheit") {
       valueBox(
         paste0(stat_data()$min_temp_ft, "°F"), "MIN", icon = icon("fa-light fa-sun"),
         color = "blue"
@@ -519,7 +524,7 @@ server <- function(input, output, session) {
   # create avg summary statistic box
   output$avgBox <- renderValueBox({
     if (input$data_type == "Temperature") {
-      if (input$temp_metric == "Fareinheit") {
+      if (input$temp_metric == "Fahrenheit") {
       valueBox(
         paste0(stat_data()$avg_temp_ft, "°F"), "AVG", icon = icon("fa-light fa-sun"),
         color = "green"
