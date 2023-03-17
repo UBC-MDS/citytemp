@@ -38,7 +38,6 @@ jobs:
             make
             gdal-bin
             libssl-dev
-            libcurl
             libcurl4-openssl-dev
             libudunits2-dev
             libgdal-dev
