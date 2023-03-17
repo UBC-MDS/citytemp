@@ -186,16 +186,16 @@ server <- function(input, output, session) {
    output$bar_temptitle <- renderText({
      if (input$temp_unit == "Celsius") {
        ifelse(input$highlow == "high",
-            paste("Cities in", input$state, "by Highest Average Temperature in", input$month, "(°C)"),
-            paste("Cities in", input$state, "by Lowest Average Temperature in", input$month, "(°C)"))}
+            paste("Cities in", input$statename, "by Highest Average Temperature in", input$month, "(°C)"),
+            paste("Cities in", input$statename, "by Lowest Average Temperature in", input$month, "(°C)"))}
      else {
        ifelse(input$highlow == "high",
-              paste("Cities in", input$state, "by Highest Average Temperature in", input$month, "(°F)"),
-              paste("Cities in", input$state, "by Lowest Average Temperature in", input$month, "(°F)"))}
+              paste("Cities in", input$statename, "by Highest Average Temperature in", input$month, "(°F)"),
+              paste("Cities in", input$statename, "by Lowest Average Temperature in", input$month, "(°F)"))}
      })
    
    output$bar_prectitle <- renderText({
-     paste("Cities in", input$state, "by Average Precipitation in", input$month, "(Inches)")})
+     paste("Cities in", input$statename, "by Average Precipitation in", input$month, "(Inches)")})
    
   # Update city and state input based on map clicks
   observeEvent(input$map_marker_click, {
