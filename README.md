@@ -26,7 +26,7 @@ Being unprepared for certain weather conditions can make or break a trip. Our mo
 
 ## Dashboard Preview and Description
 
-<img src='img/demo.gif' width="1000" height="500">
+<img src='img/m4demo.gif' width="1000" height="500">
 
 Our dashboard is presents observed temperature and precipitation data from the [weather_forcasts.csv](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-12-20/weather_forecasts.csv) in tidytuesday. 
 
