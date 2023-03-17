@@ -82,8 +82,10 @@ ui <- dashboardPage(
           column(
             width = 9,
             # Added a row for summary statistics
-            fluidRow(tags$head(
-              tags$link(rel = "stylesheet", href = "https://fonts.googleapis.com/css2?family=Avant+Garde&display=swap")
+            fluidRow(
+              tags$head(
+              tags$link(
+                rel = "stylesheet", href = "https://fonts.googleapis.com/css2?family=Avant+Garde&display=swap")
             ),
             column(width = 12,
                    tags$h2(class = "text-center", style = "font-size: 20px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
@@ -97,10 +99,13 @@ ui <- dashboardPage(
             ),
             # Add main panel with plot output
             shinycssloaders::withSpinner(
-              leafletOutput("map")
+              leafletOutput("map", 
+                            height = "300px",
+                            width = "100%")
             ),
             column(width = 12,
-                   tags$h2(class = "text-center", style = "font-size: 20px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
+                   tags$h2(class = "text-center", 
+                           style = "font-size: 20px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
                            textOutput("linetitle")
                    )
             ),
@@ -136,7 +141,7 @@ ui <- dashboardPage(
             radioButtons(
               "temp_unit", 
               "Select Temperature metric:",
-              choices = c("Celsius", "Fahrenheit"), selected = "Celsius")
+              choices = c("Celsius", "Fareinheit"), selected = "Celsius")
           ),
           column(
             width = 10,
@@ -290,14 +295,16 @@ server <- function(input, output, session) {
 
   
   output$line_plot <- renderPlot({
-    if (input$data_type == "Temperature") {
+    if (input$data_type == "Temperature") 
+      {
       if (input$temp_metric == "Fareinheit") {
-      ggplot(line_data(), aes(x = month, y = temp_f, col = high_or_low)) +
+      ggplot(line_data(), 
+             aes(x = month, y = temp_f, col = high_or_low)) +
         geom_point() +
         geom_line(size = 1) +
         theme_classic() +
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
-        labs(x = "Month", y = "Temperature (°F)", color = "High/Low") 
+        labs(x = "Month", y = "Temperature (°F)", color = "High/Low") +
         theme(
           panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(),
@@ -327,7 +334,8 @@ server <- function(input, output, session) {
           plot.title = element_text(size=20, face="bold", family="AvantGarde", hjust = 0.5),
           legend.text=element_text(size=12, face="bold", family="AvantGarde"), 
           legend.title=element_blank()) 
-    }}
+    }
+      }
     else{
       ggplot(line_data(), aes(x = month, y = precip)) +
         geom_point(color = "violetred") +
