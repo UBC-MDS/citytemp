@@ -99,6 +99,11 @@ ui <- dashboardPage(
             shinycssloaders::withSpinner(
               leafletOutput("map")
             ),
+            column(width = 12,
+                   tags$h2(class = "text-center", style = "font-size: 20px; font-weight: bold; font-family: 'Avant Garde', sans-serif;",
+                           textOutput("linetitle")
+                   )
+            ),
             shinycssloaders::withSpinner(
             plotOutput("line_plot",
                        height = "200px",
@@ -156,6 +161,12 @@ server <- function(input, output, session) {
    output$summaryTitle <- renderText({
      paste("Summary Statistics for", input$city, ",", input$state)
   })
+   
+   output$linetitle <- renderText({
+     if (input$data_type == "Temperature") {
+       paste("Average Temperature Distribution for", input$city, ",", input$state)}
+     else {paste("Average Precipitation Distribution for", input$city, ",", input$state)}})
+   
   
   # Update city and state input based on map clicks
   observeEvent(input$map_marker_click, {
@@ -236,28 +247,29 @@ server <- function(input, output, session) {
       addLegend(title =
                   if (input$data_type == "Temperature") {
                     if (input$temp_metric == "Fareinheit") {
-                      "Average Temperature (°F)"}
+                      "Heatmap for Average Temperature"}
                     else {
-                      "Average Temperature (°C)"
+                      "Heatmap for Average Temperature"
                     }
                   }
-                else{"Average Precipitation (inches)"}
+                else{"Heatmap for Average Precipitation"}
                 ,
                 colors =
                   if (input$data_type == "Temperature") {
-                    c("#FEF001", "#FD9A01", "#FD6104", "#F00505")}
-                else{c("#BCD2E8", "#73A5C6", "#2E5984", "#1E3F66")}
+                    c("#F00505", "#FD6104", "#FD9A01", "#FEF001")}
+                else{c("#1E3F66", "#2E5984", "#73A5C6", "#BCD2E8")}
                 ,
                 labels = 
                   if (input$data_type == "Temperature"){
                     if (input$temp_metric == "Fareinheit") {
-                      c("< 40", "40 - 60", "60 - 80", "80 <")}
+                      c("80°F or higher", "60°F - 80°F",  "40°F - 60°F", "40°F or less")}
                     else {
-                      c("< 4", "4 - 15", "15 - 27", "27 <")}}
-                else {c("< 0.05", "0.05 - 0.15", "0.15 - 0.25", "0.25 <")}
+                      c("27°C or higher", "15°C - 27°C", "4°C - 15°C", "4°C or less")}}
+                else {c("more than 0.25 inches", "0.15 - 0.25 inches", "0.05 - 0.15 inches", "less than 0.05 inches")}
       ) %>%
       setView(-100, 40, zoom = 3)
   })
+  
   
 # --------------------------------------Line plot start here------------------------------------
   
@@ -280,14 +292,12 @@ server <- function(input, output, session) {
   output$line_plot <- renderPlot({
     if (input$data_type == "Temperature") {
       if (input$temp_metric == "Fareinheit") {
-      ggplot(line_data(),
-             aes(x = month, y = temp_f, col = high_or_low)) +
+      ggplot(line_data(), aes(x = month, y = temp_f, col = high_or_low)) +
         geom_point() +
         geom_line(size = 1) +
         theme_classic() +
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
-        labs(x = "Month", y = "Temperature (°F)", color = "High/Low") +
-        ggtitle(paste("Temperature Distribution for", input$city, ",", input$state)) +
+        labs(x = "Month", y = "Temperature (°F)", color = "High/Low") 
         theme(
           panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(),
@@ -307,8 +317,7 @@ server <- function(input, output, session) {
         theme_classic() +
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
         labs(x = "Month", y = "Temperature (°C)", color = "High/Low") +
-        ggtitle(paste("Temperature Distribution for", input$city, ",", input$state)) +
-        theme(
+      theme(
           panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(),
           panel.background = element_rect(fill = "transparent",colour = NA),
@@ -325,8 +334,7 @@ server <- function(input, output, session) {
         geom_line(color = "lightblue", size = 1) +
         theme_classic() +
         scale_x_continuous(breaks = seq(1, 12, by = 1)) +
-        labs(x = "Month", y = "Precipitation") +
-        ggtitle(paste("Precipitation Distribution for", input$city, ",", input$state)) +
+        labs(x = "Month", y = "Precipitation (Inches)") +
         theme(
           panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(),
@@ -366,8 +374,9 @@ server <- function(input, output, session) {
     label_size <- 15 - log10(num_bars)
     ggplot(bar_data(), aes(x = avg_temp, y = reorder(city, avg_temp),fill= avg_temp)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="yellow", high="red") +
-      geom_text(aes(label = paste0(sprintf("%.2f", avg_temp))) ,
-                hjust = -0.03, size = bartext_size, color = "black") +
+      geom_text(aes(label = paste0(sprintf("%.2f", avg_temp))),
+                hjust = -0.1, size = bartext_size, color = "black", fontface="bold") +
+      scale_x_continuous(expand = c(0, 0, 0, 3)) +
       labs(
         x = (ifelse(input$temp_unit == "Celsius","Average Temperature (°C)",
                    "Average Temperature (°F)")),
@@ -404,7 +413,8 @@ server <- function(input, output, session) {
     ggplot(bar_data(), aes(x = avg_rain, y = reorder(city, avg_rain), fill = avg_rain)) +
       geom_bar(stat = "identity") + scale_fill_gradient(low="lightblue", high="darkblue") +
       geom_text(aes(label = sprintf("%.4f", avg_rain)), 
-                hjust = -0.01,  size = bartext_size, color = "black") +
+                hjust = -0.1,  size = bartext_size, color = "black", fontface="bold") +
+      scale_x_continuous(expand = c(0, 0, 0, 0.09)) +
       labs(
         x = "Average Precipitation (inch)",
         y = "City",
